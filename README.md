@@ -1,5 +1,5 @@
 # first Web Site
-first springboot web project 
+
 
 ### 웹 백엔드 연습용 간단 게시판 웹사이트입니다.
 
