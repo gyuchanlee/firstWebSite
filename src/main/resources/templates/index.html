@@ -6,5 +6,12 @@
 </head>
 <body>
 	<h1 style="text-align : center" >내 첫 개인 프로젝트 연습!!!</h1>
+	<button onclick="toBoard()">게시판으로</button>
+	
+	<script th:inline="javascript">
+		function toBoard(){
+			window.location.replace('/board/boardList')
+		}
+	</script>
 </body>
 </html>
