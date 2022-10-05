@@ -1,4 +1,4 @@
-package com.dodo.dodobirdWorld.board.config;
+package com.dodo.dodobirdWorld.config;
 
 import javax.sql.DataSource;
 
@@ -12,7 +12,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@MapperScan(basePackages = "com.dodo.dodobirdWorld.board.mapper")
+@MapperScan(basePackages = "com.dodo.dodobirdWorld.**.mapper")
 @EnableTransactionManagement
 public class MybatisConfig {
 	// bean 등록 sqlsessionfactory & sqlsessiontemplate 생성

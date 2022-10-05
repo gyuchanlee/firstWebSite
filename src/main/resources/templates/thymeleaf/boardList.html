@@ -17,24 +17,40 @@ xmlns="http://www.w3.org/1999/xhtml"
 			<table border="1">
 				<thead>
 					<tr>
-						<th>id</th>
-						<th>first name</th>
-						<th>last name</th>
-						<th>hire date</th>
+						<th>글번호</th>
+						<th>글쓴이</th>
+						<th>제목</th>
+						<th>내용</th>
+						<th>등록일</th>
+						<th>수정일</th>
+						<th>삭제일</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each=" emp : ${list}">
-						<td th:text="${emp.employee_id}">id</td>
-						<td th:text="${emp.first_name}">firstName</td>
-						<td th:text="${emp.last_name}">lastName</td>
-						<td th:text="${emp.hire_date}">hireDate</td>
+					<tr th:each=" board : ${list}"
+					th:onclick="toBoardOne()" style="cursor:pointer;">
+						<td th:text="${board.board_id}">boardId</td>
+						<td th:text="${board.writer}">writer</td>
+						<td th:text="${board.title}">title</td>
+						<td th:text="${board.content}">content</td>
+						<td th:text="${#dates.format(board.insert_date, 'yyyy-MM-dd')}">insertDate</td>
+						<td th:text="${#dates.format(board.update_date,'yyyy-MM-dd')}">updateDate</td>
+						<th:block data-th-if="${board.delete_date != null}">
+							<td th:text="${#dates.format(board.delete_date,'yyyy-MM-dd')}">deleteDate</td>
+						</th:block>
+						<th:block data-th-if="${board.delete_date == null}">
+							<td>X</td>
+						</th:block>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 		
 		<script th:inline="javascript">
+			// 나중에 클릭하면 해당 th의 글 페이지로 이동하기.
+			function toBoardOne(){
+				location.href="/";
+			}
 		</script>
 	</div>
 </body>
