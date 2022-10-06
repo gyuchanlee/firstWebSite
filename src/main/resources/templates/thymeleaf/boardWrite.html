@@ -46,23 +46,28 @@ xmlns="http://www.w3.org/1999/xhtml"
 					// ajax > Update
 					let titleUp = document.getElementById('title').value;
 					let contentUp = document.getElementById('content').value;
-			        let board = /*[[${board}]]*/ 'default';
+			        let board = /*[[${board}]]*/ 'default'; // 'default'의 사용 이유??
 			        board.title = titleUp;
 			        board.content = contentUp;
+			        let a = "/board/board/";
+			        let b = board.board_id;
+			        let url = a+b;
+			        console.log('fetch url');
+			        console.log(a+b);
 			        
-			        fetch("/board/boardWrite", {
+			        fetch(url, {
 		        	  method: "PUT", // PUT
 		        	  headers: { // 헤더 조작
 		        	    "Content-Type": "application/json",
 		        	  },
-		        	  // js객체를 json화
+		        	// js객체를 json화
 		        	  body: JSON.stringify(board),
 		        	})
 		        	  .then((response) => response.json())
 		        	  .then((data) => {
 		        		  if(parseInt(data)>0){
 		        			  alert('수정 성공!!');
-		        			  window.location.replace('/board/boardList');
+		        			  window.location.replace('/board/board'); // 아예 새 페이지로 변경 : history에 남지않아 뒤로가기 막기 가능.
 		        		  }
 		        	  })
 				}

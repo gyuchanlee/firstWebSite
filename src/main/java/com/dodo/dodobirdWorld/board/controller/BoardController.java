@@ -21,7 +21,7 @@ public class BoardController {
 	@Autowired
 	BoardListService service;
 	// 게시판 페이지 이동
-	@RequestMapping(value="/boardList")
+	@RequestMapping(value="/board")
 	public ModelAndView boardList() {
 		ModelAndView view = new ModelAndView("boardList");
 		List<BoardVO> list = service.boardList();
@@ -29,7 +29,7 @@ public class BoardController {
 		return view;
 	}
 	// 글 상세 읽기 페이지 이동
-	@GetMapping(value="/boardOne/{board_id}")
+	@GetMapping(value="/board/{board_id}")
 	public ModelAndView boardOne(@PathVariable(value = "board_id", required = true) String board_id) {
 		ModelAndView view = new ModelAndView("boardOne");
 		BoardVO board = service.boardOne(Integer.parseInt(board_id));
@@ -47,8 +47,8 @@ public class BoardController {
 	}
 	
 	// 글 Update ajax
-	@PutMapping("/boardWrite")
-	public int boardUpdate(@RequestBody BoardVO board) {
+	@PutMapping("/board/{board_id}")
+	public int boardUpdate(@PathVariable(value = "board_id", required = true) String board_id, @RequestBody BoardVO board) {
 		int success = service.boardUpdate(board);
 		System.out.println(success);
 		return success;
