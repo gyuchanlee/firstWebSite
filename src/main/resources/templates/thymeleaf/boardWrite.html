@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html
+xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default_layout}">
+<head>
+<meta charset="UTF-8">
+<title>글 상세보기</title>
+</head>
+<body>
+	<div layout:fragment="content" class="content">
+	
+		<div class="card">
+			  <th:block th:if="${board != null}">
+			  <div>
+			  	<h1>글 수정하기</h1>
+			  </div>
+			  </th:block>
+			  <div class="card-header">
+			    <span>BID : </span>
+			    <span th:text="${board.board_id}">boardId</span>
+			    <span>글쓴이 : </span>
+			    <span th:text="${board.writer}" class="card-title">writer</span>
+			  </div>
+			  <div class="card-body">
+			    <textarea th:text="${board.title}" id="title"></textarea>
+			    <hr>
+			    <textarea th:text="${board.content}" id="content"></textarea>
+			  </div>
+			  <div class="card-footer row">
+			  	<div class="col">
+				    <p th:text="'등록일자 : '+${#dates.format(board.insert_date, 'yyyy-MM-dd')}" class="card-text">insertDate</p>
+				    <span th:text="'수정일자 : '+${#dates.format(board.update_date, 'yyyy-MM-dd')}" class="card-text">updateDate</span>
+			  	</div>
+			  	<div class="col" style="text-align:right; margin-top:14px;">
+				  	<a th:onclick="boardUpdate()" class="btn btn-primary">수정 완료</a>
+				  	<a th:href="@{/board/boardList}" class="btn btn-primary">목록으로</a>
+			  	</div>
+			  </div>
+			</div>
+			
+			<script th:inline="javascript">
+			/*<![CDATA[*/ 
+				function boardUpdate(){ // 게시글 수정
+					// ajax > Update
+					let titleUp = document.getElementById('title').value;
+					let contentUp = document.getElementById('content').value;
+			        let board = /*[[${board}]]*/ 'default';
+			        board.title = titleUp;
+			        board.content = contentUp;
+			        
+			        fetch("/board/boardWrite", {
+		        	  method: "PUT", // PUT
+		        	  headers: { // 헤더 조작
+		        	    "Content-Type": "application/json",
+		        	  },
+		        	  // js객체를 json화
+		        	  body: JSON.stringify(board),
+		        	})
+		        	  .then((response) => response.json())
+		        	  .then((data) => {
+		        		  if(parseInt(data)>0){
+		        			  alert('수정 성공!!');
+		        			  window.location.replace('/board/boardList');
+		        		  }
+		        	  })
+				}
+			/*]]>*/
+			</script>	
+	</div>
+</body>
+</html>

@@ -6,4 +6,36 @@
 		FROM BOARD
 		ORDER BY BOARD_ID DESC
 	</select>
+	
+	<select id="boardOne" parameterType="int" resultType="com.dodo.dodobirdWorld.board.vo.BoardVO">
+		SELECT * 
+		FROM BOARD
+		WHERE BOARD_ID = #{board_id}
+	</select>
+	
+	<insert id="boardInsert" parameterType="com.dodo.dodobirdWorld.board.vo.BoardVO">
+		insert into board values (
+			#{board_id},
+			#{writer},
+			#{title},
+			#{content},
+			sysdate,
+			sysdate,
+			null
+		)
+	</insert>
+	
+	<update id="boardUpdate" parameterType="com.dodo.dodobirdWorld.board.vo.BoardVO">
+		update board set
+            writer = #{writer},
+            title = #{title},
+            content = #{content},
+            update_date = sysdate
+            where board_id = #{board_id}
+	</update>
+	
+	<delete id="boardDelete" parameterType="com.dodo.dodobirdWorld.board.vo.BoardVO">
+		delete from board
+		where board_id = #{board_id}
+	</delete>
 </mapper>

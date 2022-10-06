@@ -14,13 +14,33 @@ import com.dodo.dodobirdWorld.board.vo.BoardVO;
 public class BoardListServiceImpl implements BoardListService {
 	
 	@Autowired
-	private SqlSession sqlSession;
+	BoardListMapper mapper;
 	
 	@Override
 	public List<BoardVO> boardList() {
-		BoardListMapper mapper = sqlSession.getMapper(BoardListMapper.class);
 		List<BoardVO> list = mapper.boardList();
 		return list;
+	}
+
+	@Override
+	public BoardVO boardOne(int board_id) {
+		BoardVO board = mapper.boardOne(board_id);
+		return board;
+	}
+
+	@Override
+	public int boardInsert(BoardVO vo) {
+		return mapper.boardInsert(vo);
+	}
+
+	@Override
+	public int boardUpdate(BoardVO vo) {
+		return mapper.boardUpdate(vo);
+	}
+
+	@Override
+	public int boardDelete(BoardVO vo) {
+		return mapper.boardDelete(vo);
 	}
 
 }
