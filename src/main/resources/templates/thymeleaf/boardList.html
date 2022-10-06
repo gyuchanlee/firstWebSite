@@ -25,7 +25,7 @@ xmlns="http://www.w3.org/1999/xhtml"
 			    <h5 th:text="${board.title}" class="card-title">title</h5>
 			    <p th:text="${board.content}" class="card-text">content</p>
 			    <p th:text="${#dates.format(board.insert_date, 'yyyy-MM-dd')}" class="card-text">insertDate</p>
-			    <a th:href="@{/board/boardOne/{board_id}(board_id = ${board.board_id})}" class="btn btn-primary">글 상세보기</a>
+			    <a th:href="@{/board/board/{board_id}(board_id = ${board.board_id})}" class="btn btn-primary">글 상세보기</a>
 			  </div>
 			</div>
 		</div>
