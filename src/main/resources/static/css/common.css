@@ -12,6 +12,10 @@ th, td {
 	border: 1px solid #444444;
 }
 
+textarea {
+	width:60%;
+}
+
 /* .header { */
 /*     background-color: Gray; */
 /*     height: 20% */
