@@ -31,4 +31,4 @@
 
 2022-10-06 : 1.게시글 상세보기 2.게시글 수정기능 추가. 3.게시판 css 수정 4. fetch & rest api 구성
 
-2022-10-06 : 나머지 post, delete 기능 fetch와 rest api 구현 
+2022-10-06 : 나머지 post, delete 기능 fetch와 rest api 구현 > url을 rest api 형식에 맞춰서 다시 구현해보기
