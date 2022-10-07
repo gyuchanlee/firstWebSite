@@ -3,14 +3,19 @@
 
 ### 웹 백엔드 연습용 종합 게시판 웹사이트입니다.
 
-#### 스프링부트, thymeleaf, 메이븐, oracle DB를 활용했습니다.
+#### 활용한 tools & library
+1. 스프링부트 2.7.4
+2. thymeleaf
+3. 메이븐
+4. oracle DB / JDBC / Mybatis
+5. sweetAlert2
+6. bootstrap5.2v
 
 #### 프로젝트 목표
 1. 스프링부트와 사용한 도구들을 제대로 연결해서 프로젝트를 만들기
 2. spring security 공부 및 적용
 3. jdbc 트랜잭션 공부 및 적용
 4. 게시판 CRUD 구현 - 조회수, 페이징 및 검색 처리
-
 
 #### 목표 기능
 1. 게시판
@@ -33,3 +38,6 @@
 2022-10-06 : 1.게시글 상세보기 2.게시글 수정기능 추가. 3.게시판 css 수정 4. fetch & rest api 구성
 
 2022-10-06 : 나머지 post, delete 기능 fetch와 rest api 구현 > url을 rest api 형식에 맞춰서 다시 구현해보기
+
+2022-10-07 게시판 post, delete 기능 완성 / sweetAlert2 적용 > 게시판 글 등록 시 회원 세션값을 매개변수로 넣기 & spring security 및 회원 적용
+
