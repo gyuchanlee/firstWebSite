@@ -3,8 +3,10 @@ package com.dodo.dodobirdWorld.board.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +17,6 @@ import com.dodo.dodobirdWorld.board.service.BoardListService;
 import com.dodo.dodobirdWorld.board.vo.BoardVO;
 
 @RestController
-@RequestMapping(value="/board")
 public class BoardController {
 	
 	@Autowired
@@ -37,7 +38,7 @@ public class BoardController {
 		return view;
 	}
 	
-	// 글 수정 / 등록 페이지 이동
+	// 글 수정 페이지 이동
 	@GetMapping(value="/boardWrite/{board_id}")
 	public ModelAndView boardWrite(@PathVariable(value = "board_id", required = true) String board_id) {
 		ModelAndView view = new ModelAndView("boardWrite");
@@ -46,11 +47,31 @@ public class BoardController {
 		return view;
 	}
 	
+	// 글 등록 페이지 이동
+	@GetMapping(value="/boardWrite")
+	public ModelAndView boardWrite2() {
+		ModelAndView view = new ModelAndView("boardWrite");
+		return view;
+	}
+	
+	// 글 Insert ajax
+	@PostMapping("/board")
+	public int boardInsert(@RequestBody BoardVO board) {
+		int success = service.boardInsert(board);
+		return success;
+	}
+	
 	// 글 Update ajax
 	@PutMapping("/board/{board_id}")
-	public int boardUpdate(@PathVariable(value = "board_id", required = true) String board_id, @RequestBody BoardVO board) {
+	public int boardUpdate(@RequestBody BoardVO board) {
 		int success = service.boardUpdate(board);
-		System.out.println(success);
+		return success;
+	}
+	
+	// 글 Update ajax
+	@DeleteMapping("/board/{board_id}")
+	public int boardDelete(@RequestBody BoardVO board) {
+		int success = service.boardDelete(board);
 		return success;
 	}
 	

@@ -12,67 +12,136 @@ xmlns="http://www.w3.org/1999/xhtml"
 	<div layout:fragment="content" class="content">
 	
 		<div class="card">
-			  <th:block th:if="${board != null}">
-			  <div>
-			  	<h1>글 수정하기</h1>
-			  </div>
-			  </th:block>
-			  <div class="card-header">
-			    <span>BID : </span>
-			    <span th:text="${board.board_id}">boardId</span>
-			    <span>글쓴이 : </span>
-			    <span th:text="${board.writer}" class="card-title">writer</span>
-			  </div>
-			  <div class="card-body">
-			    <textarea th:text="${board.title}" id="title"></textarea>
-			    <hr>
-			    <textarea th:text="${board.content}" id="content"></textarea>
-			  </div>
-			  <div class="card-footer row">
-			  	<div class="col">
-				    <p th:text="'등록일자 : '+${#dates.format(board.insert_date, 'yyyy-MM-dd')}" class="card-text">insertDate</p>
-				    <span th:text="'수정일자 : '+${#dates.format(board.update_date, 'yyyy-MM-dd')}" class="card-text">updateDate</span>
-			  	</div>
-			  	<div class="col" style="text-align:right; margin-top:14px;">
-				  	<a th:onclick="boardUpdate()" class="btn btn-primary">수정 완료</a>
-				  	<a th:href="@{/board/boardList}" class="btn btn-primary">목록으로</a>
-			  	</div>
-			  </div>
-			</div>
+		  <!-- 글 수정 -->
+		  <th:block th:if="${board != null}">
+		  <div>
+		  	<h1>글 수정하기</h1>
+		  </div>
+		  <div class="card-header">
+		    <span>BID : </span>
+		    <span th:text="${board.board_id}">boardId</span>
+		    <span>글쓴이 : </span>
+		    <span th:text="${board.writer}" class="card-title">writer</span>
+		  </div>
+		  <div class="card-body">
+		  	<h5>제목</h5>
+		    <textarea th:text="${board.title}" id="title"></textarea>
+		    <hr>
+		    <h5>건전한 컨텐츠를 등록해주세요!!</h5>
+		    <textarea th:text="${board.content}" id="content"></textarea>
+		  </div>
+		  <div class="card-footer row">
+		  	<div class="col">
+			    <p th:text="'등록일자 : '+${#dates.format(board.insert_date, 'yyyy-MM-dd')}" class="card-text">insertDate</p>
+			    <span th:text="'수정일자 : '+${#dates.format(board.update_date, 'yyyy-MM-dd')}" class="card-text">updateDate</span>
+		  	</div>
+		  	<div class="col" style="text-align:right; margin-top:14px;">
+			  	<a th:onclick="boardUpdate()" class="btn btn-primary">수정 완료</a>
+			  	<a th:href="@{/board}" class="btn btn-primary">목록으로</a>
+		  	</div>
+		  </div>
+		  </th:block>
+		  <!-- 글 등록 -->
+		  <th:block th:unless="${board != null}">
+		  <div>
+		  	<h1>글 등록하기</h1>
+		  </div>
+		  <div class="card-header">
+		    <span>글쓴이 : </span>
+<!-- 		    <span th:text="${board.writer}" class="card-title">writer</span> -->
+		  </div>
+		  <div class="card-body">
+		    <h5>제목</h5>
+		    <textarea id="titleInsert"></textarea>
+		    <hr>
+		    <h5>건전한 컨텐츠를 등록해주세요!!</h5>
+		    <textarea id="contentInsert"></textarea>
+		  </div>
+		  <div class="card-footer row">
+		  	<div class="col">
+		  	</div>
+		  	<div class="col" style="text-align:right; margin-top:2px;">
+			  	<a th:onclick="boardInsert()" class="btn btn-primary">등록 완료</a>
+			  	<a th:href="@{/board}" class="btn btn-primary">목록으로</a>
+		  	</div>
+		  </div>
+		  </th:block>
+		</div>
 			
-			<script th:inline="javascript">
-			/*<![CDATA[*/ 
-				function boardUpdate(){ // 게시글 수정
-					// ajax > Update
-					let titleUp = document.getElementById('title').value;
-					let contentUp = document.getElementById('content').value;
-			        let board = /*[[${board}]]*/ 'default'; // 'default'의 사용 이유??
-			        board.title = titleUp;
-			        board.content = contentUp;
-			        let a = "/board/board/";
-			        let b = board.board_id;
-			        let url = a+b;
-			        console.log('fetch url');
-			        console.log(a+b);
-			        
-			        fetch(url, {
-		        	  method: "PUT", // PUT
-		        	  headers: { // 헤더 조작
-		        	    "Content-Type": "application/json",
-		        	  },
-		        	// js객체를 json화
-		        	  body: JSON.stringify(board),
-		        	})
-		        	  .then((response) => response.json())
-		        	  .then((data) => {
-		        		  if(parseInt(data)>0){
-		        			  alert('수정 성공!!');
-		        			  window.location.replace('/board/board'); // 아예 새 페이지로 변경 : history에 남지않아 뒤로가기 막기 가능.
-		        		  }
-		        	  })
+		<script th:inline="javascript">
+		/*<![CDATA[*/ 
+			function boardUpdate(){ // 게시글 수정
+				// ajax > Update
+				let titleUp = document.getElementById('title').value;
+				let contentUp = document.getElementById('content').value;
+		        let board = /*[[${board}]]*/ 'default'; // 'default'의 사용 이유??
+		        board.title = titleUp;
+		        board.content = contentUp;
+		        let a = "/board/";
+		        let b = board.board_id;
+		        let url = a+b;
+		        console.log(board);
+		        
+		        fetch(url, {
+	        	  method: "PUT", // PUT
+	        	  headers: { // 헤더 조작
+	        	    "Content-Type": "application/json",
+	        	  },
+	        	// js객체를 json화
+	        	  body: JSON.stringify(board),
+	        	})
+	        	  .then((response) => response.json())
+	        	  .then((data) => {
+	        		  if(parseInt(data)>0){
+	        			  alert('수정 성공!!');
+	        			  window.location.replace('/board'); // 아예 새 페이지로 변경 : history에 남지않아 뒤로가기 막기 가능.
+	        		  }
+	        	  })
+			}
+		
+			function boardInsert(){
+				// ajax > insert
+				let titleInsert = document.getElementById('titleInsert').value;
+				let contentInsert = document.getElementById('contentInsert').value;
+				// 빈값 안넣게 예외처리
+				if(titleInsert == null || titleInsert == '' || contentInsert == null || contentInsert == '') {
+					alert('제목 혹은 내용을 입력하세요!')
+					return;
 				}
-			/*]]>*/
-			</script>	
+				
+				// BoardVO 객체 만들기
+				let board = {
+						board_id : null,
+						content : null,
+						delete_date : null,
+						insert_date : null,
+						title : null,
+						update_date : null,
+						writer : "비둘기", // 테스트용 비둘기 > 나중에 회원 세션정보 넣기.
+				}
+		        board.title = titleInsert;
+		        board.content = contentInsert;
+		        let url = "/board";
+		        console.log(board)
+		        
+		        fetch(url, {
+	        	  method: "POST", // POST
+	        	  headers: { // 헤더 조작
+	        	    "Content-Type": "application/json",
+	        	  },
+	        	// js객체를 json화
+	        	  body: JSON.stringify(board),
+	        	})
+	        	  .then((response) => response.json())
+	        	  .then((data) => {
+	        		  if(parseInt(data)>0){
+	        			  alert('등록 완료!!');
+	        			  window.location.replace('/board'); // 아예 새 페이지로 변경 : history에 남지않아 뒤로가기 막기 가능.
+	        		  }
+	        	  })
+			}
+		/*]]>*/
+		</script>	
 	</div>
 </body>
 </html>
