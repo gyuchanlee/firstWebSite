@@ -39,5 +39,5 @@
 
 2022-10-06 : 나머지 post, delete 기능 fetch와 rest api 구현 > url을 rest api 형식에 맞춰서 다시 구현해보기
 
-2022-10-07 게시판 post, delete 기능 완성 / sweetAlert2 적용 > 게시판 글 등록 시 회원 세션값을 매개변수로 넣기 & spring security 및 회원 적용
+2022-10-07 게시판 post, delete 기능 완성 / sweetAlert2 적용 > 게시판 페이징 & 검색 기능
 
