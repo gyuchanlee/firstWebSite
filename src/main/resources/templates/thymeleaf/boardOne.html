@@ -14,7 +14,7 @@ xmlns="http://www.w3.org/1999/xhtml"
 		<div class="card">
 			  <div class="card-header">
 			    <span>BID : </span>
-			    <span th:text="${board.board_id}">boardId</span>
+			    <span th:text="${board.board_id}" id="boardId">boardId</span>
 			    <span>글쓴이 : </span>
 			    <span th:text="${board.writer}" class="card-title">writer</span>
 			  </div>
@@ -29,12 +29,24 @@ xmlns="http://www.w3.org/1999/xhtml"
 				    <span th:text="'수정일자 : '+${#dates.format(board.update_date, 'yyyy-MM-dd')}" class="card-text">updateDate</span>
 			  	</div>
 			  	<div class="col" style="text-align:right; margin-top:14px;">
-				  	<a th:href="@{/board/boardWrite/{board_id}(board_id = ${board.board_id})}" class="btn btn-primary">수정</a>
-				  	<a th:href="@{/board/board}" class="btn btn-primary">삭제</a>
-				  	<a th:href="@{/board/board}" class="btn btn-primary">목록으로</a>
+				  	<a th:href="@{/boardWrite/{board_id}(board_id = ${board.board_id})}" class="btn btn-primary">수정</a>
+				  	<a th:onclick="boardDelete()" class="btn btn-primary">삭제</a>
+				  	<a th:href="@{/board}" class="btn btn-primary">목록으로</a>
 			  	</div>
 			  </div>
 			</div>	
 	</div>
+	
+	<script th:inline="javascript">
+		document.addEventListener("DOMContentLoaded", () => {
+			let board_id = document.getElementById('boardId').value;
+			console.log(board_id);
+		});
+		function boardDelete() {
+			let url = '/board/'+board_id;
+			console.log(url);
+			
+		}
+	</script>
 </body>
 </html>

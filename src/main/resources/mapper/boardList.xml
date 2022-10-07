@@ -15,7 +15,7 @@
 	
 	<insert id="boardInsert" parameterType="com.dodo.dodobirdWorld.board.vo.BoardVO">
 		insert into board values (
-			#{board_id},
+			BOARD_ID_SEQ.nextval,
 			#{writer},
 			#{title},
 			#{content},
