@@ -39,8 +39,8 @@ public class BoardListServiceImpl implements BoardListService {
 	}
 
 	@Override
-	public int boardDelete(BoardVO vo) {
-		return mapper.boardDelete(vo);
+	public int boardDelete(int board_id) {
+		return mapper.boardDelete(board_id);
 	}
 
 }

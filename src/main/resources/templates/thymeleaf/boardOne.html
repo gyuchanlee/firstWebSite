@@ -12,41 +12,72 @@ xmlns="http://www.w3.org/1999/xhtml"
 	<div layout:fragment="content" class="content">
 	
 		<div class="card">
-			  <div class="card-header">
-			    <span>BID : </span>
-			    <span th:text="${board.board_id}" id="boardId">boardId</span>
-			    <span>글쓴이 : </span>
-			    <span th:text="${board.writer}" class="card-title">writer</span>
-			  </div>
-			  <div class="card-body">
-			    <h5 th:text="${board.title}" class="card-title">title</h5>
-			    <hr>
-			    <p th:text="${board.content}" class="card-text">content</p>
-			  </div>
-			  <div class="card-footer row">
-			  	<div class="col">
-				    <p th:text="'등록일자 : '+${#dates.format(board.insert_date, 'yyyy-MM-dd')}" class="card-text">insertDate</p>
-				    <span th:text="'수정일자 : '+${#dates.format(board.update_date, 'yyyy-MM-dd')}" class="card-text">updateDate</span>
-			  	</div>
-			  	<div class="col" style="text-align:right; margin-top:14px;">
-				  	<a th:href="@{/boardWrite/{board_id}(board_id = ${board.board_id})}" class="btn btn-primary">수정</a>
-				  	<a th:onclick="boardDelete()" class="btn btn-primary">삭제</a>
-				  	<a th:href="@{/board}" class="btn btn-primary">목록으로</a>
-			  	</div>
-			  </div>
-			</div>	
-	</div>
-	
-	<script th:inline="javascript">
-		document.addEventListener("DOMContentLoaded", () => {
-			let board_id = document.getElementById('boardId').value;
-			console.log(board_id);
-		});
-		function boardDelete() {
-			let url = '/board/'+board_id;
-			console.log(url);
+		  <div class="card-header">
+		    <span>BID : </span>
+		    <span th:text="${board.board_id}" id="boardId">boardId</span>
+		    <span>글쓴이 : </span>
+		    <span th:text="${board.writer}" class="card-title">writer</span>
+		  </div>
+		  <div class="card-body">
+		    <h5 th:text="${board.title}" class="card-title">title</h5>
+		    <hr>
+		    <p th:text="${board.content}" class="card-text">content</p>
+		  </div>
+		  <div class="card-footer row">
+		  	<div class="col">
+			    <p th:text="'등록일자 : '+${#dates.format(board.insert_date, 'yyyy-MM-dd')}" class="card-text">insertDate</p>
+			    <span th:text="'수정일자 : '+${#dates.format(board.update_date, 'yyyy-MM-dd')}" class="card-text">updateDate</span>
+		  	</div>
+		  	<div class="col" style="text-align:right; margin-top:14px;">
+			  	<a th:href="@{/boardWrite/{board_id}(board_id = ${board.board_id})}" class="btn btn-primary">수정</a>
+			  	<a th:onclick="boardDelete()" class="btn btn-primary">삭제</a>
+			  	<a th:href="@{/board}" class="btn btn-primary">목록으로</a>
+		  	</div>
+		  </div>
+		</div>
+		
+		<script th:inline="javascript">
+			function boardDelete() {
+				let board_id = document.getElementById('boardId').innerText;
+				let url = '/board/'+board_id;
+				console.log(url);
+				// 삭제 여부 마지막으로 확인받기
+				Swal.fire({
+		            title: '글을 삭제하시겠습니까?',
+		            text: "한번 지우면 다시 되돌릴 수 없습니다.",
+		            icon: 'warning',
+		            showCancelButton: true,
+		            confirmButtonColor: '#3085d6',
+		            cancelButtonColor: '#d33',
+		            confirmButtonText: '삭제',
+		            cancelButtonText: '취소'
+		        }).then((result) => {
+		            if (result.isConfirmed) {
+		            	fetch(url, {
+							method : 'DELETE',
+							headers : {
+								"Content-Type": "application/json",
+							},
+							body : JSON.stringify(board_id),
+						})
+							.then(res => res.json())
+							.then(data => {
+								if(parseInt(data)>0){
+									Swal.fire({
+					                    showConfirmButton: false,
+					                    title: '삭제 완료',
+					                    icon: 'success'
+									});
+									setTimeout(() => {
+					        			window.location.replace('/board'); // 아예 새 페이지로 변경 : history에 남지않아 뒤로가기 막기 가능.
+									}, 1500);
+								}
+							})
+		            }
+		        })
+			}
+		</script>
 			
-		}
-	</script>
+	</div>
 </body>
 </html>

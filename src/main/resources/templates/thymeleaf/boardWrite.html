@@ -69,7 +69,7 @@ xmlns="http://www.w3.org/1999/xhtml"
 		</div>
 			
 		<script th:inline="javascript">
-		/*<![CDATA[*/ 
+		/*<![CDATA[*/
 			function boardUpdate(){ // 게시글 수정
 				// ajax > Update
 				let titleUp = document.getElementById('title').value;
@@ -93,8 +93,14 @@ xmlns="http://www.w3.org/1999/xhtml"
 	        	  .then((response) => response.json())
 	        	  .then((data) => {
 	        		  if(parseInt(data)>0){
-	        			  alert('수정 성공!!');
-	        			  window.location.replace('/board'); // 아예 새 페이지로 변경 : history에 남지않아 뒤로가기 막기 가능.
+	        			  Swal.fire({
+			                    showConfirmButton: false,
+			                    title: '수정 완료',
+			                    icon: 'success'
+							});
+							setTimeout(() => {
+			        			window.location.replace('/board'); // 아예 새 페이지로 변경 : history에 남지않아 뒤로가기 막기 가능.
+							}, 1500);
 	        		  }
 	        	  })
 			}
@@ -105,7 +111,12 @@ xmlns="http://www.w3.org/1999/xhtml"
 				let contentInsert = document.getElementById('contentInsert').value;
 				// 빈값 안넣게 예외처리
 				if(titleInsert == null || titleInsert == '' || contentInsert == null || contentInsert == '') {
-					alert('제목 혹은 내용을 입력하세요!')
+					Swal.fire({
+			            title: '제목 혹은 내용을 입력하세요!',
+			            icon: 'warning',
+			            confirmButtonColor: '#3085d6',
+			            confirmButtonText: '확인'
+			        })
 					return;
 				}
 				
@@ -135,8 +146,14 @@ xmlns="http://www.w3.org/1999/xhtml"
 	        	  .then((response) => response.json())
 	        	  .then((data) => {
 	        		  if(parseInt(data)>0){
-	        			  alert('등록 완료!!');
-	        			  window.location.replace('/board'); // 아예 새 페이지로 변경 : history에 남지않아 뒤로가기 막기 가능.
+	        			  Swal.fire({
+			                    showConfirmButton: false,
+			                    title: '등록 완료',
+			                    icon: 'success'
+							});
+							setTimeout(() => {
+			        			window.location.replace('/board'); // 아예 새 페이지로 변경 : history에 남지않아 뒤로가기 막기 가능.
+							}, 1500);
 	        		  }
 	        	  })
 			}
