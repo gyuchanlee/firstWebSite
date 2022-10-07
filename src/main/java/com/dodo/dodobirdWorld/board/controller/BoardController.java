@@ -68,10 +68,10 @@ public class BoardController {
 		return success;
 	}
 	
-	// 글 Update ajax
+	// 글 delete ajax
 	@DeleteMapping("/board/{board_id}")
-	public int boardDelete(@RequestBody BoardVO board) {
-		int success = service.boardDelete(board);
+	public int boardDelete(@RequestBody int board_id) {
+		int success = service.boardDelete(board_id);
 		return success;
 	}
 	

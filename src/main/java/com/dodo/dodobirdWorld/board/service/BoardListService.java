@@ -9,5 +9,5 @@ public interface BoardListService {
 	public BoardVO boardOne(int board_id);
 	public int boardInsert(BoardVO vo);
 	public int boardUpdate(BoardVO vo);
-	public int boardDelete(BoardVO vo);
+	public int boardDelete(int board_id);
 }
