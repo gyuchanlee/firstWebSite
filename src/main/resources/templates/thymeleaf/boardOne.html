@@ -20,6 +20,7 @@ xmlns="http://www.w3.org/1999/xhtml"
 		  </div>
 		  <div class="card-body">
 		    <h5 th:text="${board.title}" class="card-title">title</h5>
+		    <p style="text-align:right; margin-right:2%;">조회수 : <span th:text="${board.hit}" class="card-title">hit</span></p>
 		    <hr>
 		    <p th:text="${board.content}" class="card-text">content</p>
 		  </div>

@@ -43,4 +43,9 @@ public class BoardListServiceImpl implements BoardListService {
 		return mapper.boardDelete(board_id);
 	}
 
+	@Override
+	public void hitUpdate(int board_id) {
+		mapper.hitUpdate(board_id);
+	}
+
 }

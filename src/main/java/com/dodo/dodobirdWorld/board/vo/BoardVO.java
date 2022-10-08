@@ -13,4 +13,5 @@ public class BoardVO {
 	private Date insert_date;
 	private Date update_date;
 	private Date delete_date;
+	private int hit;
 }
