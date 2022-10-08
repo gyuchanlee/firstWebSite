@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,22 +24,16 @@ public class BoardController {
 	@Autowired
 	BoardListService service;
 	// 게시판 페이지 이동
-	@RequestMapping(value="/board")
-	public ModelAndView boardList() {
-		ModelAndView view = new ModelAndView("boardList");
-		List<BoardVO> list = service.boardList();
-		view.addObject("list", list);
-		return view;
-	}
-	
-	// 게시판 검색 조건 페이지 이동
-	@GetMapping(value="/board/filters")
-	public ModelAndView boardList(@RequestParam String search, @RequestParam String keyword ) {
+	@GetMapping(value="/board")
+	public ModelAndView boardList(@RequestParam(required = false) String search, @RequestParam(required = false) String keyword ) {
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("search", search);
-		map.put("keyword", keyword);
+		if(search != null) { // 검색 조건이 param으로 넘어왔을 시, 값을 hashMap에 넣어줌.
+			map.put("search", search);
+			map.put("keyword", keyword);
+		}
+		
 		ModelAndView view = new ModelAndView("boardList");
-		List<BoardVO> list = service.boardListFilters(map);
+		List<BoardVO> list = service.boardList(map);
 		view.addObject("list", list);
 		return view;
 	}
