@@ -1,6 +1,8 @@
 package com.dodo.dodobirdWorld.board.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -29,6 +32,19 @@ public class BoardController {
 		view.addObject("list", list);
 		return view;
 	}
+	
+	// 게시판 검색 조건 페이지 이동
+	@GetMapping(value="/board/filters")
+	public ModelAndView boardList(@RequestParam String search, @RequestParam String keyword ) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("search", search);
+		map.put("keyword", keyword);
+		ModelAndView view = new ModelAndView("boardList");
+		List<BoardVO> list = service.boardListFilters(map);
+		view.addObject("list", list);
+		return view;
+	}
+	
 	// 글 상세 읽기 페이지 이동
 	@GetMapping(value="/board/{board_id}")
 	public ModelAndView boardOne(@PathVariable(value = "board_id", required = true) String board_id) {
