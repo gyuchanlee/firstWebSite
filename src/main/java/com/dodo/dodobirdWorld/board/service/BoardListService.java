@@ -6,8 +6,7 @@ import java.util.Map;
 import com.dodo.dodobirdWorld.board.vo.BoardVO;
 
 public interface BoardListService {
-	public List<BoardVO> boardList();
-	public List<BoardVO> boardListFilters(Map<String,Object> map); // 검색 기능 있는 전체리스트 조회
+	public List<BoardVO> boardList(Map<String, Object> map);
 	public BoardVO boardOne(int board_id);
 	public int boardInsert(BoardVO vo);
 	public int boardUpdate(BoardVO vo);

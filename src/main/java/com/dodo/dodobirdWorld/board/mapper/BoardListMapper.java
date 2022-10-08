@@ -9,8 +9,7 @@ import com.dodo.dodobirdWorld.board.vo.BoardVO;
 
 @Mapper
 public interface BoardListMapper {
-	public List<BoardVO> boardList();
-	public List<BoardVO> boardListFilters(Map<String,Object> map);
+	public List<BoardVO> boardList(Map<String, Object> map);
 	public BoardVO boardOne(int board_id);
 	public int boardInsert(BoardVO vo);
 	public int boardUpdate(BoardVO vo);

@@ -55,6 +55,12 @@ xmlns="http://www.w3.org/1999/xhtml"
 			</div>
 		</div>
 		
+		<th:block th:if="${list.size} < 1">
+			<div style="height:200px;">
+				<p class="fs-1 text-center fw-bold" style="margin-top:200px;">검색한 글은 존재하지 않습니다!!</p>
+			</div>
+		</th:block>
+		
 		<script th:inline="javascript">
 			function searchType(searchType) {
 				document.getElementById('search').value = searchType;
@@ -72,7 +78,7 @@ xmlns="http://www.w3.org/1999/xhtml"
 			        })
 					return;
 				}
-				let url = '/board/filters?search='+searchType+'&keyword='+keyword;
+				let url = '/board?search='+searchType+'&keyword='+keyword;
 				console.log(url);
 				
 				// 검색어를 넣어 리스트 가져오기

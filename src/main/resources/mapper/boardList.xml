@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dodo.dodobirdWorld.board.mapper.BoardListMapper">
-	<select id="boardList" resultType="com.dodo.dodobirdWorld.board.vo.BoardVO">
-		SELECT * 
-		FROM BOARD
-		ORDER BY BOARD_ID DESC
-	</select>
-	
-	<select id="boardListFilters" parameterType="Map" resultType="com.dodo.dodobirdWorld.board.vo.BoardVO">
+	<select id="boardList" parameterType="Map" resultType="com.dodo.dodobirdWorld.board.vo.BoardVO">
 		SELECT * 
 		FROM BOARD
 		<where>
