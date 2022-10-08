@@ -26,7 +26,8 @@
 			#{content},
 			sysdate,
 			sysdate,
-			null
+			null,
+			0
 		)
 	</insert>
 	
