@@ -42,6 +42,9 @@ public class BoardController {
 	@GetMapping(value="/board/{board_id}")
 	public ModelAndView boardOne(@PathVariable(value = "board_id", required = true) String board_id) {
 		ModelAndView view = new ModelAndView("boardOne");
+		// 글 상세 조회 들어가면서 조회수 +1 서비스 호출
+		service.hitUpdate(Integer.parseInt(board_id));
+		// 조회수 올린 뒤, 글 상세 조회
 		BoardVO board = service.boardOne(Integer.parseInt(board_id));
 		view.addObject("board",board);
 		return view;
