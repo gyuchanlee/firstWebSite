@@ -1,6 +1,7 @@
 package com.dodo.dodobirdWorld.board.service.Impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,12 @@ public class BoardListServiceImpl implements BoardListService {
 	@Override
 	public int boardDelete(int board_id) {
 		return mapper.boardDelete(board_id);
+	}
+
+	@Override
+	public List<BoardVO> boardListFilters(Map<String, Object> map) {
+		List<BoardVO> list = mapper.boardListFilters(map);
+		return list;
 	}
 
 }

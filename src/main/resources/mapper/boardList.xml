@@ -7,6 +7,17 @@
 		ORDER BY BOARD_ID DESC
 	</select>
 	
+	<select id="boardListFilters" parameterType="Map" resultType="com.dodo.dodobirdWorld.board.vo.BoardVO">
+		SELECT * 
+		FROM BOARD
+		<where>
+			<if test="search =='글쓴이'">AND WRITER LIKE '%' ||#{keyword}|| '%'</if>
+			<if test="search =='제목'">AND TITLE LIKE '%' ||#{keyword}|| '%'</if>
+			<if test="search =='내용'">AND CONTENT LIKE '%' ||#{keyword}|| '%'</if>
+		</where>
+		ORDER BY BOARD_ID DESC
+	</select>
+	
 	<select id="boardOne" parameterType="int" resultType="com.dodo.dodobirdWorld.board.vo.BoardVO">
 		SELECT * 
 		FROM BOARD
