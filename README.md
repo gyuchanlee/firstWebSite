@@ -45,6 +45,8 @@
 
 2022-10-08 조회수 기능 추가(글 상세 조회 controller 연결)
 
+2022-10-09 @Transactional - baordController 적용
+
 > 검색 조회 / 전체 조회 같은 컨트롤러에 적용 @RequestParam(required=false) : 매개변수 없으면 null로 할당
 > 
 > 게시판 페이징 공통기능 구현하기
