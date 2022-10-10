@@ -28,3 +28,8 @@ textarea {
 /* .footer { */
 /*     background-color: yellow; */
 /* } */
+
+/* 페이지네이션 */
+.pagination {
+   justify-content: center;
+}
