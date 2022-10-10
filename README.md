@@ -39,15 +39,17 @@
 
 2022-10-06 : 나머지 post, delete 기능 fetch와 rest api 구현 > url을 rest api 형식에 맞춰서 다시 구현해보기
 
-2022-10-07 게시판 post, delete 기능 완성 / sweetAlert2 적용 > 게시판 페이징 & 검색 기능
+2022-10-07 : 게시판 post, delete 기능 완성 / sweetAlert2 적용 > 게시판 페이징 & 검색 기능
 
-2022-10-08 게시판 검색 기능 연결 > restful api의 검색 get url 의문점 : 검색 조건을 param으로 줄 때, 같은 기본 조회 컨트롤로 한번에 처리 불가능??
+2022-10-08 : 게시판 검색 기능 연결 > restful api의 검색 get url 의문점 : 검색 조건을 param으로 줄 때, 같은 기본 조회 컨트롤로 한번에 처리 불가능??
 
-2022-10-08 조회수 기능 추가(글 상세 조회 controller 연결)
+2022-10-08 : 조회수 기능 추가(글 상세 조회 controller 연결)
 
-2022-10-09 @Transactional - baordController 적용
+2022-10-09 : @Transactional - baordController 적용
 
 > 검색 조회 / 전체 조회 같은 컨트롤러에 적용 @RequestParam(required=false) : 매개변수 없으면 null로 할당
 > 
 > 게시판 페이징 공통기능 구현하기
+
+2022-10-10 : paging boardList페이지 및 pagination class 기본 설정 - db연결 필요
 
