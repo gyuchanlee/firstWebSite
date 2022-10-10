@@ -59,6 +59,27 @@ xmlns="http://www.w3.org/1999/xhtml"
 			</div>
 		</div>
 		
+		<!-- 페이지네이션 -->
+		<div>
+			<nav aria-label="Page navigation example">
+			  <ul class="pagination">
+			    <li class="page-item">
+			      <a class="page-link" href="#" aria-label="Previous">
+			        <span aria-hidden="true">&laquo;</span>
+			      </a>
+			    </li>
+			    <li class="page-item"><a class="page-link" href="#">1</a></li>
+			    <li class="page-item"><a class="page-link" href="#">2</a></li>
+			    <li class="page-item"><a class="page-link" href="#">3</a></li>
+			    <li class="page-item">
+			      <a class="page-link" href="#" aria-label="Next">
+			        <span aria-hidden="true">&raquo;</span>
+			      </a>
+			    </li>
+			  </ul>
+			</nav>
+		</div>
+		
 		<th:block th:if="${list.size} < 1">
 			<div style="height:200px;">
 				<p class="fs-1 text-center fw-bold" style="margin-top:200px;">검색한 글은 존재하지 않습니다!!</p>
