@@ -33,8 +33,8 @@ public class Pagination {
             currentPage = 1;
         }
         //10,20,30개 단위 이외 처리 방지 > 프론트단에서 10, 20, 30 정하도록 하기
-        if (cntPerPage != 10 && cntPerPage != 20 && cntPerPage != 30) {
-            cntPerPage = 10;
+        if (cntPerPage != 8 && cntPerPage != 16 && cntPerPage != 24) {
+            cntPerPage = 8;
         }
         // 하단 페이지 갯수 10개로 제한
         if (pageSize != 10) {
@@ -50,7 +50,7 @@ public class Pagination {
         this.totalRecordCount = totalRecordCount;
  
         if (totalRecordCount > 0) {
-            calculation();
+            calculation(); // 전체 데이터 개수에 맞춰서 페이징 계산 시작
         }
     }
     

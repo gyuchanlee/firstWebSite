@@ -10,6 +10,7 @@ import com.dodo.dodobirdWorld.board.vo.BoardVO;
 @Mapper
 public interface BoardListMapper {
 	public List<BoardVO> boardList(Map<String, Object> map); // 전체 글 조회 + 검색 param
+	public int boardListCount(Map<String, Object> map); // 게시물 카운트 for Paging
 	public BoardVO boardOne(int board_id);
 	public int boardInsert(BoardVO vo);
 	public int boardUpdate(BoardVO vo);

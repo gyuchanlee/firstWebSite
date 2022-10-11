@@ -2,14 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dodo.dodobirdWorld.board.mapper.BoardListMapper">
 	<select id="boardList" parameterType="Map" resultType="com.dodo.dodobirdWorld.board.vo.BoardVO">
-		SELECT * 
-		FROM BOARD
-		<where>
-			<if test="search =='글쓴이'">AND WRITER LIKE '%' ||#{keyword}|| '%'</if>
-			<if test="search =='제목'">AND TITLE LIKE '%' ||#{keyword}|| '%'</if>
-			<if test="search =='내용'">AND CONTENT LIKE '%' ||#{keyword}|| '%'</if>
-		</where>
-		ORDER BY BOARD_ID DESC
+		SELECT B.RNUM, B.BOARD_ID, B.WRITER, B.TITLE , B.CONTENT, B.INSERT_DATE, B.UPDATE_DATE, B.DELETE_DATE, B.HIT
+		FROM ( 
+			    SELECT ROWNUM AS RNUM, A.BOARD_ID, A.WRITER, A.TITLE , A.CONTENT, A.INSERT_DATE, A.UPDATE_DATE, A.DELETE_DATE, A.HIT
+			    FROM (
+			        SELECT BOARD_ID, WRITER, TITLE , CONTENT, INSERT_DATE, UPDATE_DATE, DELETE_DATE, HIT
+			        FROM BOARD
+			        <where>
+						<if test="search =='글쓴이'">AND WRITER LIKE '%' ||#{keyword}|| '%'</if>
+						<if test="search =='제목'">AND TITLE LIKE '%' ||#{keyword}|| '%'</if>
+						<if test="search =='내용'">AND CONTENT LIKE '%' ||#{keyword}|| '%'</if>
+					</where>
+			        ORDER BY BOARD_ID DESC) A
+			     <![CDATA[    
+		        WHERE ROWNUM <= #{lastRecordIndex}
+		         ]]> 
+		      ) B
+		WHERE B.RNUM >= #{firstRecordIndex}
+		
 	</select>
 	
 	<select id="boardOne" parameterType="int" resultType="com.dodo.dodobirdWorld.board.vo.BoardVO">
@@ -51,5 +61,15 @@
 		delete from board
 		where board_id = #{board_id}
 	</delete>
+	
+	<!-- counting for paging -->
+	<select id="boardListCount" parameterType="map" resultType="int">
+		select count(*) from board
+		<where>
+			<if test="search =='글쓴이'">AND WRITER LIKE '%' ||#{keyword}|| '%'</if>
+			<if test="search =='제목'">AND TITLE LIKE '%' ||#{keyword}|| '%'</if>
+			<if test="search =='내용'">AND CONTENT LIKE '%' ||#{keyword}|| '%'</if>
+		</where>
+	</select>
 	
 </mapper>
