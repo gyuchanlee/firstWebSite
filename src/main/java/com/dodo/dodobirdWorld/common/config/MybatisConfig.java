@@ -1,4 +1,4 @@
-package com.dodo.dodobirdWorld.config;
+package com.dodo.dodobirdWorld.common.config;
 
 import javax.sql.DataSource;
 
