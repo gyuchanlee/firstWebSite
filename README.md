@@ -53,3 +53,6 @@
 
 2022-10-10 : paging boardList페이지 및 pagination class 기본 설정 - db연결 필요
 
+2022-10-11 기초 페이징 처리 구현
+
+
