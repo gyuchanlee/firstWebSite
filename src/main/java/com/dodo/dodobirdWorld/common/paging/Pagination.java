@@ -32,7 +32,7 @@ public class Pagination {
         if (currentPage < 1) {
             currentPage = 1;
         }
-        //10,20,30개 단위 이외 처리 방지 > 프론트단에서 10, 20, 30 정하도록 하기
+        //8,16,24개 단위 이외 처리 방지 > 프론트단에서 8, 16, 24 정하도록 하기
         if (cntPerPage != 8 && cntPerPage != 16 && cntPerPage != 24) {
             cntPerPage = 8;
         }

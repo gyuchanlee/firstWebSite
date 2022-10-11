@@ -109,32 +109,7 @@ xmlns="http://www.w3.org/1999/xhtml"
 			  </ul>
 			</nav>
 		</div>
-		
-		<!-- 출력할 게시물 개수 정하기 -->
-	    <div class="bottom">
-	        <div class="bottom-left">
-	            <select id="cntSelectBox" name="cntSelectBox"
-	                th:onchange="changeSelectBox(${pagination.currentPage},${pagination.cntPerPage},${pagination.pageSize})"
-	                class="form-control" style="width: 100px;">
-	                <option value="8">8개씩</option>
-	                <option value="16">16개씩</option>
-	                <option value="24">24개씩</option>
-	            </select>
-	        </div>
-	    </div>
 	    
-	    <div>
-	    	<ul>
-	    		<li th:text="${pagination.currentPage}"></li>
-	    		<li th:text="${pagination.cntPerPage}"></li>
-	    		<li th:text="${pagination.pageSize}"></li>
-	    		<li th:text="${pagination.totalRecordCount}"></li>
-	    		<li th:text="${pagination.totalPageCount}"></li>
-	    		<li th:text="${pagination.firstPage}"></li>
-	    		<li th:text="${pagination.lastPage}"></li>
-	    	</ul>
-	    </div>
-		
 		<th:block th:if="${list.size} < 1">
 			<div style="height:200px;">
 				<p class="fs-1 text-center fw-bold" style="margin-top:200px;">검색한 글은 존재하지 않습니다!!</p>
@@ -168,16 +143,6 @@ xmlns="http://www.w3.org/1999/xhtml"
 				
 				// 검색어를 넣어 리스트 가져오기
 				location.href=url;
-			}
-			
-			// 페이지네이션 함수
-			//10,20,30개씩 selectBox 클릭 이벤트
-			function changeSelectBox(currentPage, cntPerPage, pageSize){
-			    var selectValue = $("#cntSelectBox").children("option:selected").val();
-			    alert('')
-			    // 페이지 이동
-			    location.href = "/board?currentPage="+currentPage+"&cntPerPage="+selectValue+"&pageSize="+pageSize;
-			    
 			}
 		</script>
 	</div>
