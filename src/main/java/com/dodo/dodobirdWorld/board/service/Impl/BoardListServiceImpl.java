@@ -48,4 +48,10 @@ public class BoardListServiceImpl implements BoardListService {
 		mapper.hitUpdate(board_id);
 	}
 
+	// 페이징을 위한 전체 게시물 개수 카운트 메서드
+	@Override
+	public int boardListCount(Map<String, Object> map) {
+		return mapper.boardListCount(map);
+	}
+
 }

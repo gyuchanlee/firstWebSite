@@ -62,24 +62,54 @@ xmlns="http://www.w3.org/1999/xhtml"
 		<!-- 페이지네이션 -->
 		<div>
 			<nav aria-label="Page navigation example">
-			  <ul class="pagination">
+			  <ul th:if="${pagination.totalRecordCount > 0}" class="pagination">
+			  
+			  <th:block th:if="${pagination.hasPreviousPage == true}">
 			    <li class="page-item">
-			      <a class="page-link" href="#" aria-label="Previous">
-			        <span aria-hidden="true">&laquo;</span>
+			      <a class="page-link" 
+				      th:href= "@{/board(currentPage=${pagination.currentPage}-1,cntPerPage=${pagination.cntPerPage},pageSize=${pagination.pageSize},search=${search},keyword=${keyword})}" 
+				      aria-label="Previous">
+				      <span aria-hidden="true">&laquo;</span>
 			      </a>
 			    </li>
-			    <li class="page-item"><a class="page-link" href="#">1</a></li>
-			    <li class="page-item"><a class="page-link" href="#">2</a></li>
-			    <li class="page-item"><a class="page-link" href="#">3</a></li>
-			    <li class="page-item">
-			      <a class="page-link" href="#" aria-label="Next">
-			        <span aria-hidden="true">&raquo;</span>
+			  </th:block>
+			  <th:block th:unless="${pagination.hasPreviousPage == true}">
+			  	<li class="page-item disabled">
+			      <a class="page-link" 
+				      aria-label="Previous">
+				      <span aria-hidden="true">&laquo;</span>
 			      </a>
 			    </li>
+			  </th:block>
+			    
+			    <li th:each="num : ${#numbers.sequence(pagination.firstPage,pagination.lastPage)}" class="page-item">
+			   		<a class="page-link" 
+			   			th:text="${num}"
+			   			th:href= "@{/board(currentPage=${num},cntPerPage=${pagination.cntPerPage},pageSize=${pagination.pageSize},search=${search},keyword=${keyword})}">
+			   		</a>
+			    </li>
+			    
+			    <th:block th:if="${pagination.hasNextPage == true}">
+				    <li class="page-item">
+				      <a class="page-link" 
+				      	th:href= "@{/board(currentPage=${pagination.currentPage}+1,cntPerPage=${pagination.cntPerPage},pageSize=${pagination.pageSize},search=${search},keyword=${keyword})}" 
+				      	aria-label="Next">
+				        <span aria-hidden="true">&raquo;</span>
+				      </a>
+				    </li>
+			  	</th:block>
+			    <th:block th:unless="${pagination.hasNextPage == true}">
+				  	<li class="page-item disabled">
+				      <a class="page-link" 
+					      aria-label="Next">
+					      <span aria-hidden="true">&raquo;</span>
+				      </a>
+				    </li>
+			  </th:block>
 			  </ul>
 			</nav>
 		</div>
-		
+	    
 		<th:block th:if="${list.size} < 1">
 			<div style="height:200px;">
 				<p class="fs-1 text-center fw-bold" style="margin-top:200px;">검색한 글은 존재하지 않습니다!!</p>
@@ -87,13 +117,18 @@ xmlns="http://www.w3.org/1999/xhtml"
 		</th:block>
 		
 		<script th:inline="javascript">
+			document.addEventListener("DOMContentLoaded", function() {
+				var searchType = document.getElementById('search').value;
+				var keyword = document.getElementById('keyword').value;
+			});
+		
 			function searchType(searchType) {
 				document.getElementById('search').value = searchType;
 			}
 			
 			function boardSearch(){
-				let searchType = document.getElementById('search').value;
-				let keyword = document.getElementById('keyword').value;
+				searchType = document.getElementById('search').value;
+				keyword = document.getElementById('keyword').value;
 				if(searchType == '' || searchType == null || keyword == '' || keyword == null) {
 					Swal.fire({
 			            title: '제목 혹은 내용을 입력하세요!',

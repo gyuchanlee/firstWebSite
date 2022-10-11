@@ -18,23 +18,40 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.dodo.dodobirdWorld.board.service.BoardListService;
 import com.dodo.dodobirdWorld.board.vo.BoardVO;
+import com.dodo.dodobirdWorld.common.paging.Pagination;
 
 @RestController
 public class BoardController {
 	
 	@Autowired
 	BoardListService service;
-	// 게시판 페이지 이동
+	// 게시판 페이지 이동 + 검색 + 페이지네이션 적용
 	@GetMapping(value="/board")
-	public ModelAndView boardList(@RequestParam(required = false) String search, @RequestParam(required = false) String keyword ) {
+	public ModelAndView boardList(@RequestParam(required = false) String search, 
+								  @RequestParam(required = false) String keyword,
+								  @RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage,
+						          @RequestParam(value = "cntPerPage", required = false, defaultValue = "8") int cntPerPage,
+						          @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		if(search != null) { // 검색 조건이 param으로 넘어왔을 시, 값을 hashMap에 넣어줌.
 			map.put("search", search);
 			map.put("keyword", keyword);
 		}
 		
+		int listCount = service.boardListCount(map); // 게시물 총 개수
+		Pagination pagination = new Pagination(currentPage,cntPerPage,pageSize); // 페이징 객체 불러오기
+		pagination.setTotalRecordCount(listCount); //  페이징 계산
+		// 쿼리에 param으로 넘길 값들 map에 넣기.
+		map.put("firstRecordIndex", pagination.getFirstRecordIndex());
+		map.put("lastRecordIndex", pagination.getLastRecordIndex());
+		
 		ModelAndView view = new ModelAndView("boardList");
 		List<BoardVO> list = service.boardList(map);
+		if(search != null) { // 페이지 하단 이동할때 param으로 쓸 변수
+			view.addObject("search",search);
+			view.addObject("keyword",keyword);
+		}
+		view.addObject("pagination",pagination);
 		view.addObject("list", list);
 		return view;
 	}
