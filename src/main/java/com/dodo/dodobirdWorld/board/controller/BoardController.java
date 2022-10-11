@@ -47,6 +47,10 @@ public class BoardController {
 		
 		ModelAndView view = new ModelAndView("boardList");
 		List<BoardVO> list = service.boardList(map);
+		if(search != null) { // 페이지 하단 이동할때 param으로 쓸 변수
+			view.addObject("search",search);
+			view.addObject("keyword",keyword);
+		}
 		view.addObject("pagination",pagination);
 		view.addObject("list", list);
 		return view;

@@ -67,7 +67,7 @@ xmlns="http://www.w3.org/1999/xhtml"
 			  <th:block th:if="${pagination.hasPreviousPage == true}">
 			    <li class="page-item">
 			      <a class="page-link" 
-				      th:href= "@{/board(currentPage=${pagination.currentPage}-1,cntPerPage=${pagination.cntPerPage},pageSize=${pagination.pageSize})}" 
+				      th:href= "@{/board(currentPage=${pagination.currentPage}-1,cntPerPage=${pagination.cntPerPage},pageSize=${pagination.pageSize},search=${search},keyword=${keyword})}" 
 				      aria-label="Previous">
 				      <span aria-hidden="true">&laquo;</span>
 			      </a>
@@ -85,14 +85,14 @@ xmlns="http://www.w3.org/1999/xhtml"
 			    <li th:each="num : ${#numbers.sequence(pagination.firstPage,pagination.lastPage)}" class="page-item">
 			   		<a class="page-link" 
 			   			th:text="${num}"
-			   			th:href= "@{/board(currentPage=${num},cntPerPage=${pagination.cntPerPage},pageSize=${pagination.pageSize})}">
+			   			th:href= "@{/board(currentPage=${num},cntPerPage=${pagination.cntPerPage},pageSize=${pagination.pageSize},search=${search},keyword=${keyword})}">
 			   		</a>
 			    </li>
 			    
 			    <th:block th:if="${pagination.hasNextPage == true}">
 				    <li class="page-item">
 				      <a class="page-link" 
-				      	th:href= "@{/board(currentPage=${pagination.currentPage}+1,cntPerPage=${pagination.cntPerPage},pageSize=${pagination.pageSize})}" 
+				      	th:href= "@{/board(currentPage=${pagination.currentPage}+1,cntPerPage=${pagination.cntPerPage},pageSize=${pagination.pageSize},search=${search},keyword=${keyword})}" 
 				      	aria-label="Next">
 				        <span aria-hidden="true">&raquo;</span>
 				      </a>
@@ -142,13 +142,18 @@ xmlns="http://www.w3.org/1999/xhtml"
 		</th:block>
 		
 		<script th:inline="javascript">
+			document.addEventListener("DOMContentLoaded", function() {
+				var searchType = document.getElementById('search').value;
+				var keyword = document.getElementById('keyword').value;
+			});
+		
 			function searchType(searchType) {
 				document.getElementById('search').value = searchType;
 			}
 			
 			function boardSearch(){
-				let searchType = document.getElementById('search').value;
-				let keyword = document.getElementById('keyword').value;
+				searchType = document.getElementById('search').value;
+				keyword = document.getElementById('keyword').value;
 				if(searchType == '' || searchType == null || keyword == '' || keyword == null) {
 					Swal.fire({
 			            title: '제목 혹은 내용을 입력하세요!',
