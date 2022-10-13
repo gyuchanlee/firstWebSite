@@ -9,14 +9,18 @@ xmlns="http://www.w3.org/1999/xhtml"
 </head>
 <body>
     <div layout:fragment="content" class="content">
-		<h1  >도도새 월드</h1>
-		<div>
+		<h1 style="text-align:center;">도도새 월드</h1>
+		<div th:if="${#strings.isEmpty(id)}">
 			<a th:href="@{/login}">로그인</a>
+			<a th:href="@{/userSignUp}">회원가입</a>
 		</div>
-		<div>
+		<div th:unless="${#strings.isEmpty(id)}">
+			<a th:href="@{/logout}">로그아웃</a>
+		</div>
+		<div th:if="${not #strings.isEmpty(id)}">
 			<th:block th:if="${not #strings.isEmpty(message)}">
 				<h2 th:text="|MESSAGE : ${message}|" style="text-align:center;"></h2>
-			</th:if>
+			</th:block>
 			<table border="1">
 				<thead>
 					<tr>

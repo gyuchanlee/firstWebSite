@@ -26,9 +26,9 @@
 		          <a class="nav-link disabled">Introduce</a>
 		        </li>
 		      </ul>
-		      <a class="navbar-brand" href="/">
+		      <a class="navbar-brand" th:href="@{/user/{id}( id = ${id} )}">
 			      <img src="/img/dodoDAL.png" alt="Logo" width="60" height="44" class="d-inline-block align-text-top">
-			      회원정보
+			      <span th:text="${nickname}" style="margin-top:10px;"></span>
 			   </a>
 		    </div>
 		  </div>

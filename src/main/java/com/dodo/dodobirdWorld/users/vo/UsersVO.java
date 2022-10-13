@@ -8,6 +8,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 import lombok.Data;
 
 @SuppressWarnings("serial")
@@ -21,7 +23,12 @@ public class UsersVO implements UserDetails {
 	private String password;
 	// 나중에 개선 필요
 	private String authority;
+	private String email;
+	private String address;
+	private String phone;
 	
+	// ajax에서 UsersVO를 json화 할때 생기는 문제 해결 > ddserializer 커스텀 class 추가.
+	@JsonDeserialize(using = CustomAuthorityDeserializer.class)
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		ArrayList<GrantedAuthority> auth = new ArrayList<>();

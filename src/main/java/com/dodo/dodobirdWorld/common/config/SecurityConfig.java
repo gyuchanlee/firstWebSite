@@ -22,11 +22,11 @@ public class SecurityConfig {
 	public SecurityFilterChain configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
-				.antMatchers("/login").permitAll() // 로그인은 모든 사용자에게 허용
 				// 각각의 사용자의 권한으로 시장하는 매핑 각각의 사용자가 가진 권한에 맞춰서 적용
-				.antMatchers("/board/**").permitAll()
-//				.antMatchers("/board/**").hasRole("USER")
-				.antMatchers("/admin/**").hasRole("ADMIN")
+				.antMatchers("/").permitAll()
+				.antMatchers("/board").permitAll()
+				.antMatchers("/board/**").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
+				.antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
 				.and()
 					.headers()
 					.addHeaderWriter(new XFrameOptionsHeaderWriter(
@@ -39,7 +39,7 @@ public class SecurityConfig {
                     .passwordParameter("password")
 					.successForwardUrl("/login_success") // 로그인 성공 시 포워드되는 URL (세션값 등 지정) login_success_handler
 					.failureForwardUrl("/access_denied") // 로그인 실패 시 별도로 처리 필요할 경우
-					.permitAll()
+					.permitAll() // 모든 사용자에게 허용
 				.and()
 					.csrf().disable() // CrossSite Request Forgery (disable 해주지 않을 경우 POST 매핑에서 문제 발생)
 				.logout()
