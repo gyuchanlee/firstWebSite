@@ -1,8 +1,11 @@
 package com.dodo.dodobirdWorld.users.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -64,8 +67,14 @@ public class UsersController {
 	
 	// 회원 탈퇴 delete ajax
 	@DeleteMapping("/user/{id}")
-	public int userInsert(@RequestBody String id) {
-		int success = service.userDelete(id);
+	public int userInsert(@RequestBody Map<String,String> id) {
+		String ids = id.get("id"); // @RequestBody에서 바로 String을 받아오는 경우, JSON에서 받아온 "ID" 따옴표 형식까지 등록이 되어 map으로 받아옴.
+		System.out.println(ids);
+		int success = service.userDelete(ids);
+		System.out.println(success);
+		if(success > 0) { // 회원 탈퇴 성공 시,
+			SecurityContextHolder.clearContext();
+		}
 		return success;
 	}
 }

@@ -38,7 +38,7 @@ public class SecurityConfig {
                     .usernameParameter("id") // id/pw param으로 담아 시큐리티로 보냄
                     .passwordParameter("password")
 					.successForwardUrl("/login_success") // 로그인 성공 시 포워드되는 URL (세션값 등 지정) login_success_handler
-					.failureForwardUrl("/access_denied") // 로그인 실패 시 별도로 처리 필요할 경우
+//					.failureForwardUrl("/access_denied") // 로그인 실패 시 별도로 처리 필요할 경우
 					.permitAll() // 모든 사용자에게 허용
 				.and()
 					.csrf().disable() // CrossSite Request Forgery (disable 해주지 않을 경우 POST 매핑에서 문제 발생)

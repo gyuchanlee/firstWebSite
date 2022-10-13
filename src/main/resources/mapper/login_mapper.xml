@@ -3,13 +3,16 @@
 <mapper namespace="com.dodo.dodobirdWorld.login.mapper.LoginMapper">
 	<!-- 	유저 정보 + 권한 정보 select -->
 	<select id="loadUserInfo" parameterType="String" resultType="com.dodo.dodobirdWorld.users.vo.UsersVO">
-		SELECT A.*, B.ROLE_NO, C.ROLE_NAME
-		FROM USERS A
-		    JOIN USER_ROLES B
-		    ON(A.USER_NO = B.USER_NO)
-		    JOIN ROLES C
-    		ON(B.ROLE_NO = C.ROLE_NO)
-		WHERE A.ID = #{username}
+<!-- 		SELECT A.*, B.ROLE_NO, C.ROLE_NAME -->
+<!-- 		FROM USERS A -->
+<!-- 		    JOIN USER_ROLES B -->
+<!-- 		    ON(A.USER_NO = B.USER_NO) -->
+<!-- 		    JOIN ROLES C -->
+<!--     		ON(B.ROLE_NO = C.ROLE_NO) -->
+<!-- 		WHERE A.ID = #{username} -->
+			SELECT *
+			FROM USERS
+			WHERE ID = #{username}
 	</select>
 	
 </mapper>
