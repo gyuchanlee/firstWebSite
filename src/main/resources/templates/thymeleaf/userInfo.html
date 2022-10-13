@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html
+xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default_layout}">
+<head>
+<meta charset="UTF-8">
+  <style>
+    body {
+      min-height: 100vh;
+
+      background: -webkit-gradient(linear, left bottom, right top, from(#92b5db), to(#1d466c));
+      background: -webkit-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
+      background: -moz-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
+      background: -o-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
+      background: linear-gradient(to top right, #92b5db 0%, #1d466c 100%);
+    }
+
+    .input-form {
+      max-width: 680px;
+
+      margin-top: 80px;
+      padding: 32px;
+
+      background: #fff;
+      -webkit-border-radius: 10px;
+      -moz-border-radius: 10px;
+      border-radius: 10px;
+      -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+      -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+      box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
+    }
+  </style>
+</head>
+<body>
+    <div layout:fragment="content" class="content">
+    	 <div class="container">
+		    <div class="input-form-backgroud row">
+		      <div class="input-form col-md-12 mx-auto">
+		        <h4 class="mb-3" th:text="|${user.id}님의 회원관리|">회원관리</h4>
+		        <form>
+		          <div class="row">
+		            <div class="col-md-6 mb-3">
+		              <label for="name">별명</label>
+		              <input type="text" class="form-control" id="nickname" placeholder="" th:value="${user.nickname}" required>
+		            </div>
+		            <div class="col-md-6 mb-3">
+		              <label for="nickname">비밀변호 변경</label>
+		              <input type="password" class="form-control" id="password" th:value="${user.password}" placeholder="" required readonly>
+		            </div>
+		          </div>
+		
+		          <div class="mb-3">
+		            <label for="email">이메일</label>
+		            <input type="email" class="form-control" id="email" th:value="${user.email}" placeholder="dodo@example.com" required>
+		          </div>
+		
+		          <div class="mb-3">
+		            <label for="address">주소</label>
+		            <input type="text" class="form-control" id="address" th:value="${user.address}" placeholder="대구시 수성구" required>
+		          </div>
+		          
+		          <div class="mb-3">
+		            <label for="address">전화 번호</label>
+		            <input type="text" class="form-control" id="phone" th:value="${user.phone}" placeholder="000-1111-2222" required>
+		          </div>
+		          
+		          <hr class="mb-4">
+		          
+		          <div class="mb-3">
+		          	<div>
+		          		<p th:text="|가입일 : ${#dates.format(user.register_date,'yyyy-MM-dd')}|"></p>
+		          	</div>
+		          	<div>
+		          		<p th:text="|권한 : ${user.Authority}|"><p/>
+		          	</div>
+		          </div>
+		          
+		          <hr class="mb-4">
+		          <div class="mb-4">
+		          </div>
+		          <div>
+			          <button class="btn btn-primary btn-lg btn-block" type="button" id="userUpdate">수정 완료</button>
+			          <button class="btn btn-danger btn-lg btn-block" type="button" id="userDelete" style="float: right;">회원 탈퇴</button>
+		          </div>
+		        </form>
+		      </div>
+		    </div>
+		    <footer class="my-3 text-center text-small">
+		      <p class="mb-1">&copy; 2022 DoDo</p>
+		    </footer>
+		  </div>
+		  <script th:inline="javascript">
+			  
+		  	var userUpdate = document.getElementById('userUpdate');
+		  	var userDelete = document.getElementById('userDelete');
+		  	userUpdate.addEventListener('click', () => {
+		  		// 업데이트할 정보 넣기
+	        	let nickanmeUp = document.getElementById('nickname').value;
+				let passwordUp = document.getElementById('password').value;
+				let emailUp = document.getElementById('email').value;
+				let addressUp = document.getElementById('address').value;
+				let phoneUp = document.getElementById('phone').value;
+				
+		  		if (nickanmeUp!=null && nickanmeUp!='' && passwordUp!=null && passwordUp!='' && emailUp!=null && emailUp!='' 
+		  			&& addressUp!=null && addressUp!='' && phoneUp!=null && phoneUp!='') {
+			          /*<![CDATA[*/
+			        	  // 회원 정보 수정 보내기 > ajax userUpdate
+			        	  let user = /*[[${user}]]*/ 'default';
+			        	  let id = user.id;
+			          	  let url = "/user/"+id;
+						  
+						  user.nickname = nickanmeUp;
+						  user.password = passwordUp;
+						  user.email = emailUp;
+						  user.address = addressUp;
+						  user.phone = phoneUp;
+			        	  
+			        	  fetch(url, {
+				        	  method: "PUT", // PUT
+				        	  headers: { // 헤더 조작
+				        	    "Content-Type": "application/json",
+				        	  },
+				        	// js객체를 json화
+				        	  body: JSON.stringify(user),
+				        	})
+				        	  .then((response) => response.json())
+				        	  .then((data) => {
+				        		  if(parseInt(data)>0){
+				        			  Swal.fire({
+						                    showConfirmButton: false,
+						                    title: '수정 완료',
+						                    icon: 'success'
+										});
+										setTimeout(() => {
+						        			window.location.replace('/user/'+id);
+										}, 1500);
+				        		  }
+				        	  })
+				      /*]]>*/
+			          } else {
+			        	  Swal.fire({
+							    title: '정보를 모두 입력하세요!',
+					            icon: 'warning',
+					            confirmButtonColor: '#3085d6',
+					            confirmButtonText: '확인'
+							});
+			          }
+		    });
+		  	
+		  	userDelete.addEventListener('click', () => {
+		  		// 삭제 여부 마지막으로 확인받기
+				Swal.fire({
+		            title: '계정을 삭제하시겠습니까?',
+		            text: "한번 지우면 다시 되돌릴 수 없습니다.",
+		            icon: 'warning',
+		            showCancelButton: true,
+		            confirmButtonColor: '#3085d6',
+		            cancelButtonColor: '#d33',
+		            confirmButtonText: '삭제',
+		            cancelButtonText: '취소'
+		        }).then((result) => {
+		           		if (result.isConfirmed) {
+		           			/*<![CDATA[*/
+				        	  // 회원 탈퇴 보내기 > ajax userDelete
+				        	  let user = /*[[${user}]]*/ 'default';
+				        	  let id = user.id;
+				          	  let url = "/user/"+id;
+				          	  console.log(user)
+				          	  console.log(id)
+				          	  console.log(url)
+				        	  fetch(url, {
+					        	  method: "DELETE", 
+					        	  headers: { 
+					        	    "Content-Type": "application/json",
+					        	  },
+					        	  body: JSON.stringify({ id : id }),
+					        	})
+					        	  .then((response) => response.json())
+					        	  .then((data) => {
+					        		  if(parseInt(data)>0){
+					        			  Swal.fire({
+							                    showConfirmButton: false,
+							                    title: '탈퇴 완료',
+							                    icon: 'success'
+											});
+											setTimeout(() => {
+							        			window.location.replace('/');
+											}, 1500);
+					        		  } else {
+					        			  Swal.fire({
+							                    showConfirmButton: false,
+							                    title: '탈퇴 실패',
+							                    icon: 'error'
+											});
+											setTimeout(() => {
+												
+											}, 1500);
+					        		  }
+					        	  })
+					      /*]]>*/
+		            	} 
+		          	})
+		  	});
+		  </script>
+    </div>
+</body>
+</html>

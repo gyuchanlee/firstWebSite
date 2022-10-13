@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dodo.dodobirdWorld.users.mapper.UsersMapper">
+	<!-- 	유저 정보 + 권한 정보 select -->
+	<select id="selectUserInfo" parameterType="String" resultType="com.dodo.dodobirdWorld.users.vo.UsersVO">
+		SELECT *
+		FROM USERS 
+		WHERE ID = #{id}
+	</select>
+	
+	<insert id="userInsert" parameterType="com.dodo.dodobirdWorld.users.vo.UsersVO">
+		insert into users values (
+			USER_ID_SEQ.nextval,
+			#{id},
+			#{nickname},
+			#{profile},
+			sysdate,
+			#{password},
+			'ROLE_USER',
+			#{email},
+			#{address},
+			#{phone}
+		)
+	</insert>
+	
+	<update id="userUpdate" parameterType="com.dodo.dodobirdWorld.users.vo.UsersVO">
+		update users set
+			nickname = #{nickname},
+			password = #{password},
+			email = #{email},
+			address = #{address},
+			phone = #{phone}
+		where id = #{id}
+	</update>
+	
+	<delete id="userDelete" parameterType="String">
+		delete from users
+		where id = #{id}
+	</delete>
+	
+</mapper>
