@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html
+xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default_layout}">
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+    <div layout:fragment="content" class="content">
+    
+		<h1 style="text-align : center" >도도새 월드</h1>
+		<div style="display: inline-block; text-align : center;">
+			<form th:action="@{/login}" method="POST">
+				<label for="id" class="form-label">ID</label><input type="text" id="id" name="id" class="form-control" style="width:100%;">
+				<label for="password" class="form-label">PASSWORD</label><input type="text" id="password" name="password" class="form-control" style="width:100%;">
+				<input type="submit" value="Login" class="form-control" style="width:90%;">
+			</form>
+		</div>
+		
+    </div>
+	<script th:inline="javascript">
+	</script>
+</body>
+</html>

@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,7 +33,8 @@ public class BoardController {
 								  @RequestParam(required = false) String keyword,
 								  @RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage,
 						          @RequestParam(value = "cntPerPage", required = false, defaultValue = "8") int cntPerPage,
-						          @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize) {
+						          @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize,
+						          HttpSession session) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		if(search != null) { // 검색 조건이 param으로 넘어왔을 시, 값을 hashMap에 넣어줌.
 			map.put("search", search);
@@ -59,7 +62,7 @@ public class BoardController {
 	// 글 상세 읽기 페이지 이동
 	@Transactional(rollbackFor = Exception.class)
 	@GetMapping(value="/board/{board_id}")
-	public ModelAndView boardOne(@PathVariable(value = "board_id", required = true) String board_id) {
+	public ModelAndView boardOne(@PathVariable(value = "board_id", required = true) String board_id, HttpSession session) {
 		ModelAndView view = new ModelAndView("boardOne");
 		// 글 상세 조회 들어가면서 조회수 +1 서비스 호출
 		service.hitUpdate(Integer.parseInt(board_id));
@@ -71,7 +74,7 @@ public class BoardController {
 	
 	// 글 수정 페이지 이동
 	@GetMapping(value="/boardWrite/{board_id}")
-	public ModelAndView boardWrite(@PathVariable(value = "board_id", required = true) String board_id) {
+	public ModelAndView boardWrite(@PathVariable(value = "board_id", required = true) String board_id, HttpSession session) {
 		ModelAndView view = new ModelAndView("boardWrite");
 		BoardVO board = service.boardOne(Integer.parseInt(board_id));
 		view.addObject("board",board);
@@ -80,7 +83,7 @@ public class BoardController {
 	
 	// 글 등록 페이지 이동
 	@GetMapping(value="/boardWrite")
-	public ModelAndView boardWrite2() {
+	public ModelAndView boardWrite2(HttpSession session) {
 		ModelAndView view = new ModelAndView("boardWrite");
 		return view;
 	}
