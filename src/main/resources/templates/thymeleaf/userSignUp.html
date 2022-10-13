@@ -110,8 +110,8 @@ xmlns="http://www.w3.org/1999/xhtml"
 					  let profileIn = document.getElementById('profile').value;
 					  let phoneIn = document.getElementById('phone').value;
 					  
-					  if(idIn!=null || idIn!='' || nickanmeIn!=null || nickanmeIn!='' || passwordIn!=null || passwordIn!='' || emailIn!=null || emailIn!='' ||
-							  addressIn!=null || addressIn!='' || profileIn!=null || profileIn!='' || phoneIn!=null || phoneIn!=''||phoneIn!=undefined ){
+					  if(idIn!=null && idIn!='' && nickanmeIn!=null && nickanmeIn!='' && passwordIn!=null && passwordIn!='' && emailIn!=null && emailIn!='' 
+						  && addressIn!=null && addressIn!='' && profileIn!=null && profileIn!='' && phoneIn!=null && phoneIn!=''){
 						  // BoardVO 객체 만들기
 						  let user = {
 								  id : idIn,
