@@ -15,9 +15,9 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component(value = "authenticationFailureHandler")
 /* 로그인 실패 대응 로직 */
 public class UserLoginFailHandler implements AuthenticationFailureHandler {
 
@@ -34,20 +34,20 @@ public class UserLoginFailHandler implements AuthenticationFailureHandler {
 			request.setAttribute("loginFailMsg", "아이디 또는 비밀번호가 틀립니다.");
 			
 		} else if(exception instanceof LockedException) {
-			request.setAttribute("loginFailMsg", "잠긴 계정입니다..");
+			request.setAttribute("loginFailMsg", "잠긴 계정입니다.");
 			
 		} else if(exception instanceof DisabledException) {
-			request.setAttribute("loginFailMsg", "비활성화된 계정입니다..");
+			request.setAttribute("loginFailMsg", "비활성화된 계정입니다.");
 			
 		} else if(exception instanceof AccountExpiredException) {
-			request.setAttribute("loginFailMsg", "만료된 계정입니다..");
+			request.setAttribute("loginFailMsg", "만료된 계정입니다.");
 			
 		} else if(exception instanceof CredentialsExpiredException) {
 			request.setAttribute("loginFailMsg", "비밀번호가 만료되었습니다.");
 		}
 		
 		// 로그인 페이지로 다시 포워딩
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/access_denied");
 		dispatcher.forward(request, response);
 	}
 }

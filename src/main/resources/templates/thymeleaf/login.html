@@ -6,21 +6,80 @@ xmlns="http://www.w3.org/1999/xhtml"
       layout:decorate="~{layout/default_layout}">
 <head>
 <meta charset="UTF-8">
+<style>
+   
+   html,
+   body {
+     height: 100%;
+   }
+   
+   .form-signin {
+     width: 100%;
+     max-width: 330px;
+     padding: 15px;
+     margin: auto;
+   }
+   
+   .form-signin .checkbox {
+     font-weight: 400;
+   }
+   
+   .form-signin .form-floating:focus-within {
+     z-index: 2;
+   }
+   
+   .form-signin input[type="email"] {
+     margin-bottom: -1px;
+     border-bottom-right-radius: 0;
+     border-bottom-left-radius: 0;
+   }
+   
+   .form-signin input[type="password"] {
+     margin-bottom: 10px;
+     border-top-left-radius: 0;
+     border-top-right-radius: 0;
+   }
+
+</style>
 </head>
 <body>
     <div layout:fragment="content" class="content">
     
-		<h1 style="text-align : center" >도도새 월드</h1>
-		<div style="display: inline-block; text-align : center;">
-			<form th:action="@{/login}" method="POST">
-				<label for="id" class="form-label">ID</label><input type="text" id="id" name="id" class="form-control" style="width:100%;">
-				<label for="password" class="form-label">PASSWORD</label><input type="text" id="password" name="password" class="form-control" style="width:100%;">
-				<input type="submit" value="Login" class="form-control" style="width:90%;">
+	    <div id="container">
+	    	<div>
+			<h1 style="text-align : center" >도도새 월드</h1>
+	    	</div>
+			<h2 style="text-align : center">LOGIN</h2>
+			<form class="form-signin" th:action="@{/login}" method="POST">
+				<div class="form-floating mb-3">
+					<input class="form-control" type="text" placeholder="아이디 입력" name="id" id="id" />
+					<label class="form-label" for="id">ID</label> 
+				</div>
+				<div class="form-floating mb-3">
+					<input class="form-control" type="password" name="password" placeholder="비밀번호 입력" id="password" />
+					<label class="form-label" for="password">PASSWORD</label> 
+				</div>
+				<button class="btn btn-outline-primary btn-sm" type="submit">Login</button>
 			</form>
-		</div>
-		
-    </div>
-	<script th:inline="javascript">
-	</script>
+	    </div>
+    
+		<script th:inline="javascript">
+		/*<![CDATA[*/
+			document.addEventListener('DOMContentLoaded', (event) => { // 로그인 실패 시, 로그인실패핸들러 클래스에서 다시 포워딩하면서 가져온 실패 메시지 뿌려줌.
+				let loginFailMsg = /*[[${loginFailMsg}]]*/ 'default';
+				if(loginFailMsg!=null && loginFailMsg!='') {
+					Swal.fire({
+		                showConfirmButton: false,
+		                title: '로그인 실패',
+		                text: loginFailMsg,
+		                icon: 'error',
+		                timer : 1000
+					});
+				}
+			});
+		/*]]>*/	
+		</script>
+	
+    </div> <!-- 레이아웃 content fragment -->
 </body>
 </html>

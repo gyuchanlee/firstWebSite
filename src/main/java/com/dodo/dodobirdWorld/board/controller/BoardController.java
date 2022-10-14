@@ -56,6 +56,10 @@ public class BoardController {
 		}
 		view.addObject("pagination",pagination);
 		view.addObject("list", list);
+		// 로그인 시 session 정보
+		view.addObject("id",session.getAttribute("id"));
+		view.addObject("nickname",session.getAttribute("nickname"));
+		view.addObject("userno", session.getAttribute("userno"));
 		return view;
 	}
 	
@@ -69,6 +73,9 @@ public class BoardController {
 		// 조회수 올린 뒤, 글 상세 조회
 		BoardVO board = service.boardOne(Integer.parseInt(board_id));
 		view.addObject("board",board);
+		view.addObject("id",session.getAttribute("id"));
+		view.addObject("nickname",session.getAttribute("nickname"));
+		view.addObject("userno", session.getAttribute("userno"));
 		return view;
 	}
 	
@@ -85,6 +92,9 @@ public class BoardController {
 	@GetMapping(value="/boardWrite")
 	public ModelAndView boardWrite2(HttpSession session) {
 		ModelAndView view = new ModelAndView("boardWrite");
+		view.addObject("id",session.getAttribute("id"));
+		view.addObject("nickname",session.getAttribute("nickname"));
+		view.addObject("userno", session.getAttribute("userno"));
 		return view;
 	}
 	
