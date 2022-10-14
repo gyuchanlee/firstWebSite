@@ -1,8 +1,5 @@
 package com.dodo.dodobirdWorld.login.contoller;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -10,7 +7,6 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.dodo.dodobirdWorld.login.service.UserLoginFailHandler;
 import com.dodo.dodobirdWorld.users.vo.UsersVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -58,11 +53,19 @@ public class LoginController {
 		return view;
 	}
 	// 로그인 실패
-//	@PostMapping("/access_denied")
-//	public ModelAndView access_denied (HttpSession session, Authentication authentication) {
-//		ModelAndView view = new ModelAndView("index");
-//		return view;
-//	}
+	@PostMapping("/access_denied")
+	public ModelAndView access_denied (HttpServletRequest request, HttpServletResponse response,
+			HttpSession session, Authentication authentication) {
+		authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication != null) {
+			log.info("왤케 어려움");
+		}
+		ModelAndView view = new ModelAndView("index");
+		String loginFailMsg = (String)request.getAttribute("loginFailMsg");
+		view.addObject("loginFailMsg",loginFailMsg);
+		view.addObject("message",loginFailMsg);
+		return view;
+	}
 	
 	//로그아웃
 	@PostMapping("/logout")

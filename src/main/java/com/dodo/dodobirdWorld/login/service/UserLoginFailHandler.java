@@ -15,9 +15,9 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component(value = "authenticationFailureHandler")
 /* 로그인 실패 대응 로직 */
 public class UserLoginFailHandler implements AuthenticationFailureHandler {
 
@@ -47,7 +47,7 @@ public class UserLoginFailHandler implements AuthenticationFailureHandler {
 		}
 		
 		// 로그인 페이지로 다시 포워딩
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/access_denied");
 		dispatcher.forward(request, response);
 	}
 }
