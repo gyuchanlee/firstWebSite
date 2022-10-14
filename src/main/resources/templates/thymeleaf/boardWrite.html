@@ -48,7 +48,8 @@ xmlns="http://www.w3.org/1999/xhtml"
 		  </div>
 		  <div class="card-header">
 		    <span>글쓴이 : </span>
-<!-- 		    <span th:text="${board.writer}" class="card-title">writer</span> -->
+		    <span th:text="|${nickname} (${id})|" class="card-title">writer</span>
+		    <input type="hidden" th:value="${id}" id="id" readonly>
 		  </div>
 		  <div class="card-body">
 		    <h5>제목</h5>
@@ -109,6 +110,7 @@ xmlns="http://www.w3.org/1999/xhtml"
 				// ajax > insert
 				let titleInsert = document.getElementById('titleInsert').value;
 				let contentInsert = document.getElementById('contentInsert').value;
+				let writerInsert = document.getElementById('id').value;
 				// 빈값 안넣게 예외처리
 				if(titleInsert == null || titleInsert == '' || contentInsert == null || contentInsert == '') {
 					Swal.fire({
@@ -128,7 +130,7 @@ xmlns="http://www.w3.org/1999/xhtml"
 						insert_date : null,
 						title : null,
 						update_date : null,
-						writer : "비둘기", // 테스트용 비둘기 > 나중에 회원 세션정보 넣기.
+						writer : writerInsert, // 테스트용 비둘기 > 나중에 회원 세션정보 넣기.
 				}
 		        board.title = titleInsert;
 		        board.content = contentInsert;

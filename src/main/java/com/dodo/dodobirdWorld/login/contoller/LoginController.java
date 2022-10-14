@@ -47,9 +47,9 @@ public class LoginController {
 		log.info("session : '{}'",session.getAttribute("id"));
 		
 		view.addObject("message",message);
-		view.addObject("id",user.getId());
-		view.addObject("nickname",user.getNickname());
-		view.addObject("userno", user.getUser_no());
+		view.addObject("id",session.getAttribute("id"));
+		view.addObject("nickname",session.getAttribute("nickname"));
+		view.addObject("userno", session.getAttribute("userno"));
 		return view;
 	}
 	// 로그인 실패
