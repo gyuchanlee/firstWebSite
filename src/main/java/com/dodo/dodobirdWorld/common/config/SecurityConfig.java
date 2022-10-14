@@ -42,14 +42,15 @@ public class SecurityConfig {
                     .passwordParameter("password")
 					.successForwardUrl("/login_success") // 로그인 성공 시 포워드되는 URL (세션값 등 지정) login_success_handler
 //					.failureForwardUrl("/access_denied") // 로그인 실패 시 별도로 처리 필요할 경우
-					.failureHandler(userLoginFailHandler())   // 로그인 실패 후 핸들러
+					.failureHandler(userLoginFailHandler())   // 로그인 실패 후 커스텀 로그인 실패 핸들러 설정 >> 핸들러 설정 시, forwardurl 무시됨. 
 					.permitAll() // 모든 사용자에게 허용
 				.and()
 					.csrf().disable() // CrossSite Request Forgery (disable 해주지 않을 경우 POST 매핑에서 문제 발생)
 				.logout()
 					.logoutUrl("/logout") // 로그아웃 요청 URL
 					.logoutSuccessUrl("/") // 로그아웃이 성공하면 다시 로그인 페이지로 돌아감
-					.invalidateHttpSession(true).deleteCookies("JSESSIONID") // JSESSIONID 쿠키 삭제 허용
+					.invalidateHttpSession(true) // 세션 제거 기본값 true
+					.deleteCookies("JSESSIONID") // JSESSIONID 쿠키 삭제 허용
 		;
 		
 		return http.build();

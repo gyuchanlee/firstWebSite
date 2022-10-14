@@ -57,26 +57,26 @@ public class LoginController {
 	public ModelAndView access_denied (HttpServletRequest request, HttpServletResponse response,
 			HttpSession session, Authentication authentication) {
 		authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (authentication != null) {
-			log.info("왤케 어려움");
-		}
-		ModelAndView view = new ModelAndView("index");
+		ModelAndView view = new ModelAndView("login");
 		String loginFailMsg = (String)request.getAttribute("loginFailMsg");
 		view.addObject("loginFailMsg",loginFailMsg);
 		view.addObject("message",loginFailMsg);
 		return view;
 	}
 	
-	//로그아웃
-	@PostMapping("/logout")
-	public void logout(HttpServletRequest request, HttpServletResponse response,
-			Authentication auth,HttpSession session) {
-		auth = SecurityContextHolder.getContext().getAuthentication();
-		if (auth != null) {
-			session.removeAttribute("id");
-			new SecurityContextLogoutHandler().logout(request, response, auth);
-		}
-		log.info("로그아웃 떤냐??");
-	}
+	//로그아웃 >> security에서 기존의 logout 기능을 제공. securityConfig에 기본적인 logout() 설정 사용.
+//	@PostMapping("/logout")
+//	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response,
+//			Authentication auth,HttpSession session) {
+//		auth = SecurityContextHolder.getContext().getAuthentication();
+//		if (auth != null) {
+//			session.removeAttribute("id");
+//			new SecurityContextLogoutHandler().logout(request, response, auth);
+//		}
+//		ModelAndView view = new ModelAndView("index");
+//		log.info("------------로그아웃===============");
+//		
+//		return view;
+//	}
 	
 }
