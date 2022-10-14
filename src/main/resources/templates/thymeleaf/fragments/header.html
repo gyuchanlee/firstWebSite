@@ -26,10 +26,24 @@
 		          <a class="nav-link disabled">Introduce</a>
 		        </li>
 		      </ul>
+		      <th:block th:if="${id!=null}">
 		      <a class="navbar-brand" th:href="@{/user/{id}( id = ${id} )}">
 			      <img src="/img/dodoDAL.png" alt="Logo" width="60" height="44" class="d-inline-block align-text-top">
-			      <span th:text="${nickname}" style="margin-top:10px;"></span>
+			      <span th:text="${nickname}" style="vertical-align: middle; line-height: 60px;"></span>
 			   </a>
+			   <a class="navbar-brand" th:href="@{/logout}">
+			      <span th:text="Logout" ></span>
+			   </a>
+		      </th:block>
+		      <th:block th:unless="${id!=null}">
+		      <a class="navbar-brand" th:href="@{/login}">
+		      	  <img src="/img/bros_blank1.jpg" alt="Logo" width="60" height="44" class="d-inline-block align-text-top">	
+			      <span th:text="로그인" style="vertical-align: middle; line-height: 60px; margin-top:10px;"></span>
+			   </a>
+			   <a class="navbar-brand" th:href="@{/userSignUp}">
+			      <span th:text="회원가입" style="margin-top:1px;"></span>
+			   </a>
+		      </th:block>
 		    </div>
 		  </div>
 		</nav>
