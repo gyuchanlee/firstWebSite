@@ -115,7 +115,7 @@ public class BoardController {
 	// 글 delete ajax
 	@DeleteMapping("/board/{board_id}")
 	public int boardDelete(@RequestBody int board_id) {
-		int success = service.boardDelete(board_id);
+		int success = service.boardDelete(board_id); // 논리삭제로 변경
 		return success;
 	}
 	

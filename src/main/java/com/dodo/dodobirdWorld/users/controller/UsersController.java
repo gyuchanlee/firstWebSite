@@ -2,10 +2,14 @@ package com.dodo.dodobirdWorld.users.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -67,13 +71,19 @@ public class UsersController {
 	
 	// 회원 탈퇴 delete ajax
 	@DeleteMapping("/user/{id}")
-	public int userInsert(@RequestBody Map<String,String> id) {
+	public int userInsert(@RequestBody Map<String,String> id, HttpServletRequest request, HttpServletResponse response,
+			Authentication auth,HttpSession session) {
 		String ids = id.get("id"); // @RequestBody에서 바로 String을 받아오는 경우, JSON에서 받아온 "ID" 따옴표 형식까지 등록이 되어 map으로 받아옴.
 		System.out.println(ids);
 		int success = service.userDelete(ids);
+		// 회원 게시글/댓글 삭제
+		
+		// 로그아웃
+		auth = SecurityContextHolder.getContext().getAuthentication();
 		System.out.println(success);
 		if(success > 0) { // 회원 탈퇴 성공 시,
-			SecurityContextHolder.clearContext();
+			session.removeAttribute("id");
+			new SecurityContextLogoutHandler().logout(request, response, auth);
 		}
 		return success;
 	}

@@ -50,6 +50,7 @@ xmlns="http://www.w3.org/1999/xhtml"
 		    <span>글쓴이 : </span>
 		    <span th:text="|${nickname} (${id})|" class="card-title">writer</span>
 		    <input type="hidden" th:value="${id}" id="id" readonly>
+		    <input type="hidden" th:value="${userno}" id="userno" readonly>
 		  </div>
 		  <div class="card-body">
 		    <h5>제목</h5>
@@ -110,7 +111,7 @@ xmlns="http://www.w3.org/1999/xhtml"
 				// ajax > insert
 				let titleInsert = document.getElementById('titleInsert').value;
 				let contentInsert = document.getElementById('contentInsert').value;
-				let writerInsert = document.getElementById('id').value;
+				let writerInsert = document.getElementById('userno').value;
 				// 빈값 안넣게 예외처리
 				if(titleInsert == null || titleInsert == '' || contentInsert == null || contentInsert == '') {
 					Swal.fire({

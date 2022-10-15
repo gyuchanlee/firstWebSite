@@ -2,16 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dodo.dodobirdWorld.board.mapper.BoardListMapper">
 	<select id="boardList" parameterType="Map" resultType="com.dodo.dodobirdWorld.board.vo.BoardVO">
-		SELECT B.RNUM, B.BOARD_ID, B.WRITER, B.TITLE , B.CONTENT, B.INSERT_DATE, B.UPDATE_DATE, B.DELETE_DATE, B.HIT
+		SELECT B.RNUM, B.BOARD_ID, B.WRITER, B.TITLE , B.CONTENT, B.INSERT_DATE, B.UPDATE_DATE, B.DELETE_DATE, B.HIT, B.NICKNAME
 		FROM ( 
-			    SELECT ROWNUM AS RNUM, A.BOARD_ID, A.WRITER, A.TITLE , A.CONTENT, A.INSERT_DATE, A.UPDATE_DATE, A.DELETE_DATE, A.HIT
+			    SELECT ROWNUM AS RNUM, A.BOARD_ID, A.WRITER, A.TITLE , A.CONTENT, A.INSERT_DATE, A.UPDATE_DATE, A.DELETE_DATE, A.HIT, A.NICKNAME
 			    FROM (
-			        SELECT BOARD_ID, WRITER, TITLE , CONTENT, INSERT_DATE, UPDATE_DATE, DELETE_DATE, HIT
-			        FROM BOARD
+			        SELECT C.BOARD_ID, C.WRITER, C.TITLE , C.CONTENT, C.INSERT_DATE, C.UPDATE_DATE, C.DELETE_DATE, C.HIT, D.NICKNAME
+			        FROM BOARD C
+			        JOIN USERS D
+			        ON C.writer = D.user_no
 			        <where>
-						<if test="search =='글쓴이'">AND WRITER LIKE '%' ||#{keyword}|| '%'</if>
-						<if test="search =='제목'">AND TITLE LIKE '%' ||#{keyword}|| '%'</if>
-						<if test="search =='내용'">AND CONTENT LIKE '%' ||#{keyword}|| '%'</if>
+						<if test="search =='글쓴이'">AND C.WRITER LIKE '%' ||#{keyword}|| '%'</if>
+						<if test="search =='제목'">AND C.TITLE LIKE '%' ||#{keyword}|| '%'</if>
+						<if test="search =='내용'">AND C.CONTENT LIKE '%' ||#{keyword}|| '%'</if>
+						<if test="'true' =='true'">AND C.delete_date is null</if>
 					</where>
 			        ORDER BY BOARD_ID DESC) A
 			     <![CDATA[    
@@ -57,10 +60,12 @@
 			where board_id = #{board_id}
 	</update>
 	
-	<delete id="boardDelete" parameterType="int">
-		delete from board
+	<!-- 논리 삭제 -->
+	<update id="boardDelete" parameterType="int">
+		update board set
+			delete_date =sysdate
 		where board_id = #{board_id}
-	</delete>
+	</update>
 	
 	<!-- counting for paging -->
 	<select id="boardListCount" parameterType="map" resultType="int">
