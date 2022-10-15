@@ -42,7 +42,7 @@ public class SecurityConfig {
                     .passwordParameter("password")
 					.successForwardUrl("/login_success") // 로그인 성공 시 포워드되는 URL (세션값 등 지정) login_success_handler
 //					.failureForwardUrl("/access_denied") // 로그인 실패 시 별도로 처리 필요할 경우
-					.failureHandler(userLoginFailHandler())   // 로그인 실패 후 커스텀 로그인 실패 핸들러 설정 >> 핸들러 설정 시, forwardurl 무시됨. 
+					.failureHandler(userLoginFailHandler())   // 로그인 실패 후 커스텀 로그인 실패 핸들러 설정 >> 핸들러 설정 시, failureforwardurl 무시됨. 
 					.permitAll() // 모든 사용자에게 허용
 				.and()
 					.csrf().disable() // CrossSite Request Forgery (disable 해주지 않을 경우 POST 매핑에서 문제 발생)
@@ -68,7 +68,7 @@ public class SecurityConfig {
 		return new UserLoginFailHandler();
 	}
 	
-	
+	// 비밀번호 암호화 BCrypt 사용
 //	@Bean
 //	public PasswordEncoder passwordEncoder() {
 //		return new BCryptPasswordEncoder();
