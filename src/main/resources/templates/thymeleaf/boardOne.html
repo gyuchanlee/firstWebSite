@@ -22,7 +22,7 @@ xmlns="http://www.w3.org/1999/xhtml"
 		    <h5 th:text="${board.title}" class="card-title">title</h5>
 		    <p style="text-align:right; margin-right:2%;">조회수 : <span th:text="${board.hit}" class="card-title">hit</span></p>
 		    <hr>
-		    <p th:text="${board.content}" class="card-text">content</p>
+		    <textarea cols="50" rows="15" th:text="${board.content}" class="card-text" readonly>content</textarea>
 		  </div>
 		  <div class="card-footer row">
 		  	<div class="col">
@@ -30,7 +30,7 @@ xmlns="http://www.w3.org/1999/xhtml"
 			    <span th:text="'수정일자 : '+${#dates.format(board.update_date, 'yyyy-MM-dd')}" class="card-text">updateDate</span>
 		  	</div>
 		  	<div class="col" style="text-align:right; margin-top:14px;">
-		  	<th:block th:if="${id==board.writer}">
+		  	<th:block th:if="${userno==board.writer}">
 			  	<a th:href="@{/boardWrite/{board_id}(board_id = ${board.board_id})}" class="btn btn-primary">수정</a>
 			  	<a th:onclick="boardDelete()" class="btn btn-primary">삭제</a>
 		  	</th:block>

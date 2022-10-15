@@ -14,4 +14,6 @@ public class BoardVO {
 	private Date update_date;
 	private Date delete_date;
 	private int hit;
+	// 검색 받아오기 용
+	private String nickname;
 }

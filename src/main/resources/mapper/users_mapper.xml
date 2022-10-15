@@ -5,7 +5,8 @@
 	<select id="selectUserInfo" parameterType="String" resultType="com.dodo.dodobirdWorld.users.vo.UsersVO">
 		SELECT *
 		FROM USERS 
-		WHERE ID = #{id}
+		WHERE ID = #{id} 
+			AND DELETE_DATE IS NULL
 	</select>
 	
 	<insert id="userInsert" parameterType="com.dodo.dodobirdWorld.users.vo.UsersVO">
@@ -19,7 +20,8 @@
 			'ROLE_USER',
 			#{email},
 			#{address},
-			#{phone}
+			#{phone},
+			null
 		)
 	</insert>
 	
@@ -32,10 +34,11 @@
 			phone = #{phone}
 		where id = #{id}
 	</update>
-	
-	<delete id="userDelete" parameterType="String">
-		delete from users
+	<!-- 	논리 삭제 -->
+	<update id="userDelete" parameterType="String">
+		update users set
+			delete_date = sysdate
 		where id = #{id}
-	</delete>
+	</update>
 	
 </mapper>

@@ -15,7 +15,7 @@ import lombok.Data;
 @SuppressWarnings("serial")
 @Data
 public class UsersVO implements UserDetails {
-	private int user_no;
+	private String user_no;
 	private String id;
 	private String nickname;
 	private String profile;
@@ -26,6 +26,7 @@ public class UsersVO implements UserDetails {
 	private String email;
 	private String address;
 	private String phone;
+	private Date delete_date;
 	
 	// ajax에서 UsersVO를 json화 할때 생기는 문제 해결 > ddserializer 커스텀 class 추가.
 	@JsonDeserialize(using = CustomAuthorityDeserializer.class)
