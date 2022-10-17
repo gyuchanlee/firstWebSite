@@ -16,7 +16,7 @@
 						<if test="search =='내용'">AND C.CONTENT LIKE '%' ||#{keyword}|| '%'</if>
 						<if test="'true' =='true'">AND C.delete_date is null</if>
 					</where>
-			        ORDER BY BOARD_ID DESC) A
+			        ORDER BY INSERT_DATE DESC) A
 			     <![CDATA[    
 		        WHERE ROWNUM <= #{lastRecordIndex}
 		         ]]> 
@@ -25,7 +25,7 @@
 		
 	</select>
 	
-	<select id="boardOne" parameterType="int" resultType="com.dodo.dodobirdWorld.board.vo.BoardVO">
+	<select id="boardOne" parameterType="String" resultType="com.dodo.dodobirdWorld.board.vo.BoardVO">
 		SELECT * 
 		FROM BOARD
 		WHERE BOARD_ID = #{board_id}
@@ -54,14 +54,14 @@
 	</update>
 	
 	<!-- 	조회수 +1 하여 저장 -->
-	<update id="hitUpdate" parameterType="int">
+	<update id="hitUpdate" parameterType="String">
 		update board set
 			hit = hit + 1
 			where board_id = #{board_id}
 	</update>
 	
 	<!-- 논리 삭제 -->
-	<update id="boardDelete" parameterType="int">
+	<update id="boardDelete" parameterType="String">
 		update board set
 			delete_date =sysdate
 		where board_id = #{board_id}
@@ -77,4 +77,68 @@
 		</where>
 	</select>
 	
+	<!-- 	댓글/대댓글 select -->
+	<select id="commentList" parameterType="String" resultType="com.dodo.dodobirdWorld.board.vo.BoardCommentVO">
+		SELECT board_id
+		       ,LEVEL COMMENTLEVEL
+		       ,COMMENT_ID 
+		       ,PARENT_COMMENT_ID 
+		       ,CASE WHEN LEVEL =1 THEN '' ELSE LPAD('└',LEVEL-1,'└') END ||
+		        CASE WHEN delete_date is not null THEN '***삭제된 댓글입니다***' ELSE CONTENT END CONTENT
+		       ,WRITER
+		       ,insert_DATE
+		       ,UPDATE_DATE
+		       ,DELETE_DATE
+		       ,id
+		       ,nickname     
+        
+		FROM (SELECT a.board_id
+			        ,a.COMMENT_ID 
+			        ,a.PARENT_COMMENT_ID 
+			        ,a.content
+			        ,a.WRITER
+			        ,a.insert_DATE
+			        ,a.UPDATE_DATE
+			        ,a.DELETE_DATE
+			        ,b.id
+			        ,b.nickname  
+		      FROM board_comment a
+		      join users b
+		      	on a.writer = b.user_no
+		      WHERE a.board_id = #{board_id}
+		      ) 
+		START WITH  PARENT_COMMENT_ID = 0
+		CONNECT BY PRIOR COMMENT_ID = PARENT_COMMENT_ID 
+		ORDER SIBLINGS BY COMMENT_ID
+	</select>
+	
+	<!-- 	댓글 등록 -->
+	<insert id="commentInsert" parameterType="com.dodo.dodobirdWorld.board.vo.BoardCommentVO">
+		insert into board_comment values (
+			#{board_id},
+			COMMENT_ID_SEQ.nextval,
+			#{parent_comment_id},
+			#{content},
+			#{writer},
+			sysdate,
+			null,
+			null
+			
+		)
+	</insert>
+	
+	<!-- 	댓글 수정 -->
+	<update id="commentUpdate" parameterType="com.dodo.dodobirdWorld.board.vo.BoardCommentVO">
+		update board_comment set
+			content = #{content},
+			update_date = sysdate
+		where comment_id = #{comment_id}
+	</update>
+	
+	<!-- 	댓글 논리삭제 -->
+	<update id="commentDelete" parameterType="String">
+		update board_comment set
+			delete_date = sysdate
+		where comment_id = #{comment_id}
+	</update>
 </mapper>
