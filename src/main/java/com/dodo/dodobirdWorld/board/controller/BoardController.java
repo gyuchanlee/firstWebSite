@@ -131,7 +131,7 @@ public class BoardController {
 	}
 	
 	// 댓글 Update ajax
-	@PutMapping("/comment/{commnet_id}")
+	@PutMapping("/comment/{comment_id}")
 	public int commentUpdate(@RequestBody BoardCommentVO comment) {
 		int success = service.commentUpdate(comment);
 		return success;

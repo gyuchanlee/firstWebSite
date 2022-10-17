@@ -40,7 +40,9 @@ xmlns="http://www.w3.org/1999/xhtml"
 			                <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..."></div>
 			                <div class="ms-3">
 			                    <div th:text="|${comment.nickname} (${comment.id})|" class="fw-bold">Commenter Name</div>
-			                    <p th:text="${comment.content}"></p>
+			                    <input type="hidden" th:value="${comment.comment_id}" id="comment_id">
+			                    <p th:text="${comment.content}" id="|commentContent${commentStat.count}|"></p>
+			                    <a th:var="${comment.comment_id}" th:onclick="commentUpdate(this.getAttribute('var'))">수정</a>
 			                </div>
 			            </div>
 			        </div>
@@ -133,6 +135,54 @@ xmlns="http://www.w3.org/1999/xhtml"
 							setTimeout(() => {
 			        			window.location.replace('/board/'+board_id); // 아예 새 페이지로 변경 : history에 남지않아 뒤로가기 막기 가능.
 							}, 1500);
+						} else {
+							Swal.fire({
+			                    showConfirmButton: false,
+			                    title: '등록 실패',
+			                    icon: 'error'
+							});
+							setTimeout(() => {
+			        			window.location.replace('/board/'+board_id); 
+							}, 1000);
+						}
+					})
+			}
+			
+			function commentUpdate(comment_id) {
+				let board_id = document.getElementById('boardId').innerText;
+				let content = '수정!!';
+				let comment = {
+						comment_id : comment_id,
+						content : content
+				};
+				
+				fetch('/comment/'+comment_id, {
+					method : 'PUT',
+					headers : {
+						"Content-Type": "application/json",
+					},
+					body : JSON.stringify(comment),
+				})
+					.then(res => res.json())
+					.then(data => {
+						if(parseInt(data)>0){
+							Swal.fire({
+			                    showConfirmButton: false,
+			                    title: '수정 완료',
+			                    icon: 'success'
+							});
+							setTimeout(() => {
+			        			window.location.replace('/board/'+board_id); // 아예 새 페이지로 변경 : history에 남지않아 뒤로가기 막기 가능.
+							}, 1500);
+						} else {
+							Swal.fire({
+			                    showConfirmButton: false,
+			                    title: '수정 실패',
+			                    icon: 'error'
+							});
+							setTimeout(() => {
+			        			window.location.replace('/board/'+board_id); 
+							}, 1000);
 						}
 					})
 			}
