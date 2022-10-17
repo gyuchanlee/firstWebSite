@@ -87,3 +87,5 @@ __10일차 중간점검 - 앞으로의 요구 사항들__
 2022-10-15 : users - table 외래키 연결, board select join 처리, board/users 논리삭제 변경
 
 > 댓글/대댓글 기능 + db 생성(uesrs 연결)
+>
+> oracle CASE WHEN 절 사용 > 게시물 / 댓글 삭제된 데이터는 삭제했다는 코멘트가 뜨도록 설정
