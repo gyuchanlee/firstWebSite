@@ -19,10 +19,33 @@ xmlns="http://www.w3.org/1999/xhtml"
 		    <span th:text="${board.writer}" class="card-title">writer</span>
 		  </div>
 		  <div class="card-body">
-		    <h5 th:text="${board.title}" class="card-title">title</h5>
-		    <p style="text-align:right; margin-right:2%;">조회수 : <span th:text="${board.hit}" class="card-title">hit</span></p>
-		    <hr>
-		    <textarea cols="50" rows="15" th:text="${board.content}" class="card-text" readonly>content</textarea>
+		  	<div>
+			    <h5 th:text="${board.title}" class="card-title">title</h5>
+			    <p style="text-align:right; margin-right:2%;">조회수 : <span th:text="${board.hit}" class="card-title">hit</span></p>
+			    <hr>
+			    <textarea cols="50" rows="15" th:text="${board.content}" class="card-text" readonly>content</textarea>
+		  	</div>
+		  	<section class="mb-5">
+			    <div class="card bg-light">
+			        <div class="card-body">
+			            <!-- Comment form-->
+			            <form class="mb-4"><textarea id="commentInput" class="form-control" rows="3" placeholder="Join the discussion and leave a comment!"></textarea></form>
+			            <th:block th:if="${userno!=null}">
+						  	<a th:onclick="commentInsert()" class="btn btn-primary">댓글 작성</a>
+						  	<hr>
+					  	</th:block>
+			            <!-- Comment with nested comments-->
+			            <div th:each="comment : ${comments}"  class="d-flex mb-4">
+			                <!-- Parent comment-->
+			                <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..."></div>
+			                <div class="ms-3">
+			                    <div th:text="|${comment.nickname} (${comment.id})|" class="fw-bold">Commenter Name</div>
+			                    <p th:text="${comment.content}"></p>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			</section>
 		  </div>
 		  <div class="card-footer row">
 		  	<div class="col">
@@ -40,6 +63,7 @@ xmlns="http://www.w3.org/1999/xhtml"
 		</div>
 		
 		<script th:inline="javascript">
+		/*<![CDATA[*/
 			function boardDelete() {
 				let board_id = document.getElementById('boardId').innerText;
 				let url = '/board/'+board_id;
@@ -79,6 +103,40 @@ xmlns="http://www.w3.org/1999/xhtml"
 		            }
 		        })
 			}
+			
+			function commentInsert() { // 코멘트 insert ajax
+				let commentInput = document.getElementById('commentInput').value;
+				let board_id = document.getElementById('boardId').innerText;
+				let parent_comment_id = '0'; // 일단 대댓글 기능 막기
+				let userno = /*[[${userno}]]*/ 'default';
+				let comment = {
+						content : commentInput, // 댓글 내용
+						board_id : board_id, // 게시물 번호
+						writer : userno, // 작성자 유저ID넘버
+						parent_comment_id : parent_comment_id // 대댓글이면 부모 댓글 적기
+				}
+				fetch('/comment', {
+					method : 'POST',
+					headers : {
+						"Content-Type": "application/json",
+					},
+					body : JSON.stringify(comment),
+				})
+					.then(res => res.json())
+					.then(data => {
+						if(parseInt(data)>0){
+							Swal.fire({
+			                    showConfirmButton: false,
+			                    title: '등록 완료',
+			                    icon: 'success'
+							});
+							setTimeout(() => {
+			        			window.location.replace('/board/'+board_id); // 아예 새 페이지로 변경 : history에 남지않아 뒤로가기 막기 가능.
+							}, 1500);
+						}
+					})
+			}
+		/*]]>*/
 		</script>
 			
 	</div>

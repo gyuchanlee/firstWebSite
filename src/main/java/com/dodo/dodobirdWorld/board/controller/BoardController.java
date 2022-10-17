@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dodo.dodobirdWorld.board.service.BoardListService;
+import com.dodo.dodobirdWorld.board.vo.BoardCommentVO;
 import com.dodo.dodobirdWorld.board.vo.BoardVO;
 import com.dodo.dodobirdWorld.common.paging.Pagination;
 
@@ -69,10 +70,13 @@ public class BoardController {
 	public ModelAndView boardOne(@PathVariable(value = "board_id", required = true) String board_id, HttpSession session) {
 		ModelAndView view = new ModelAndView("boardOne");
 		// 글 상세 조회 들어가면서 조회수 +1 서비스 호출
-		service.hitUpdate(Integer.parseInt(board_id));
+		service.hitUpdate(board_id);
 		// 조회수 올린 뒤, 글 상세 조회
-		BoardVO board = service.boardOne(Integer.parseInt(board_id));
+		BoardVO board = service.boardOne(board_id);
+		// 글에 해당하는 댓글 조회
+		List<BoardCommentVO> comments = service.commentList(board_id);
 		view.addObject("board",board);
+		view.addObject("comments",comments);
 		view.addObject("id",session.getAttribute("id"));
 		view.addObject("nickname",session.getAttribute("nickname"));
 		view.addObject("userno", session.getAttribute("userno"));
@@ -83,7 +87,7 @@ public class BoardController {
 	@GetMapping(value="/boardWrite/{board_id}")
 	public ModelAndView boardWrite(@PathVariable(value = "board_id", required = true) String board_id, HttpSession session) {
 		ModelAndView view = new ModelAndView("boardWrite");
-		BoardVO board = service.boardOne(Integer.parseInt(board_id));
+		BoardVO board = service.boardOne(board_id);
 		view.addObject("board",board);
 		return view;
 	}
@@ -114,8 +118,29 @@ public class BoardController {
 	
 	// 글 delete ajax
 	@DeleteMapping("/board/{board_id}")
-	public int boardDelete(@RequestBody int board_id) {
+	public int boardDelete(@RequestBody String board_id) {
 		int success = service.boardDelete(board_id); // 논리삭제로 변경
+		return success;
+	}
+	
+	// 댓글 Insert ajax
+	@PostMapping("/comment")
+	public int commentInsert(@RequestBody BoardCommentVO comment) {
+		int success = service.commentInsert(comment);
+		return success;
+	}
+	
+	// 댓글 Update ajax
+	@PutMapping("/comment/{commnet_id}")
+	public int commentUpdate(@RequestBody BoardCommentVO comment) {
+		int success = service.commentUpdate(comment);
+		return success;
+	}
+	
+	// 댓글 delete ajax
+	@DeleteMapping("/comment/{comment_id}")
+	public int commentDelete(@RequestBody String comment_id) {
+		int success = service.commentDelete(comment_id); // 논리삭제로 변경
 		return success;
 	}
 	

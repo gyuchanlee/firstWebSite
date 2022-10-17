@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.dodo.dodobirdWorld.board.mapper.BoardListMapper;
 import com.dodo.dodobirdWorld.board.service.BoardListService;
+import com.dodo.dodobirdWorld.board.vo.BoardCommentVO;
 import com.dodo.dodobirdWorld.board.vo.BoardVO;
 
 @Service
@@ -23,7 +24,7 @@ public class BoardListServiceImpl implements BoardListService {
 	}
 
 	@Override
-	public BoardVO boardOne(int board_id) {
+	public BoardVO boardOne(String board_id) {
 		BoardVO board = mapper.boardOne(board_id);
 		return board;
 	}
@@ -39,12 +40,12 @@ public class BoardListServiceImpl implements BoardListService {
 	}
 
 	@Override
-	public int boardDelete(int board_id) {
+	public int boardDelete(String board_id) {
 		return mapper.boardDelete(board_id);
 	}
 
 	@Override
-	public void hitUpdate(int board_id) {
+	public void hitUpdate(String board_id) {
 		mapper.hitUpdate(board_id);
 	}
 
@@ -52,6 +53,26 @@ public class BoardListServiceImpl implements BoardListService {
 	@Override
 	public int boardListCount(Map<String, Object> map) {
 		return mapper.boardListCount(map);
+	}
+
+	@Override
+	public List<BoardCommentVO> commentList(String board_id) {
+		return mapper.commentList(board_id);
+	}
+
+	@Override
+	public int commentInsert(BoardCommentVO vo) {
+		return mapper.commentInsert(vo);
+	}
+
+	@Override
+	public int commentUpdate(BoardCommentVO vo) {
+		return mapper.commentUpdate(vo);
+	}
+
+	@Override
+	public int commentDelete(String board_id) {
+		return mapper.commentDelete(board_id);
 	}
 
 }
