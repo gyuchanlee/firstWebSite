@@ -71,8 +71,8 @@ public class BoardListServiceImpl implements BoardListService {
 	}
 
 	@Override
-	public int commentDelete(String board_id) {
-		return mapper.commentDelete(board_id);
+	public int commentDelete(String comment_id) {
+		return mapper.commentDelete(comment_id);
 	}
 
 }

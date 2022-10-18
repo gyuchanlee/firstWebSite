@@ -43,6 +43,7 @@ xmlns="http://www.w3.org/1999/xhtml"
 			                    <input type="hidden" th:value="${comment.comment_id}" id="comment_id">
 			                    <p th:text="${comment.content}" id="|commentContent${commentStat.count}|"></p>
 			                    <a th:var="${comment.comment_id}" th:onclick="commentUpdate(this.getAttribute('var'))">수정</a>
+			                    <a th:var="${comment.comment_id}" th:onclick="commentDelete(this.getAttribute('var'))">삭제</a>
 			                </div>
 			            </div>
 			        </div>
@@ -108,15 +109,26 @@ xmlns="http://www.w3.org/1999/xhtml"
 			
 			function commentInsert() { // 코멘트 insert ajax
 				let commentInput = document.getElementById('commentInput').value;
+				if(commentInput==null || commentInput=='') {
+					Swal.fire({
+	                    showConfirmButton: false,
+	                    title: '수정 실패',
+	                    text : '댓글 내용을 올바르게 적으세요',
+	                    icon: 'error'
+					});
+					return;
+				}
 				let board_id = document.getElementById('boardId').innerText;
 				let parent_comment_id = '0'; // 일단 대댓글 기능 막기
 				let userno = /*[[${userno}]]*/ 'default';
+				// comment 객체에 담아 보내기.
 				let comment = {
 						content : commentInput, // 댓글 내용
 						board_id : board_id, // 게시물 번호
 						writer : userno, // 작성자 유저ID넘버
 						parent_comment_id : parent_comment_id // 대댓글이면 부모 댓글 적기
 				}
+				
 				fetch('/comment', {
 					method : 'POST',
 					headers : {
@@ -150,7 +162,16 @@ xmlns="http://www.w3.org/1999/xhtml"
 			
 			function commentUpdate(comment_id) {
 				let board_id = document.getElementById('boardId').innerText;
-				let content = '수정!!';
+				let content = prompt("댓글 내용을 수정하세요(임시 에디터)", "");
+				if(content==null || content=='') {
+					Swal.fire({
+	                    showConfirmButton: false,
+	                    title: '수정 실패',
+	                    text : '댓글 내용을 올바르게 적으세요',
+	                    icon: 'error'
+					});
+					return;
+				}
 				let comment = {
 						comment_id : comment_id,
 						content : content
@@ -178,6 +199,40 @@ xmlns="http://www.w3.org/1999/xhtml"
 							Swal.fire({
 			                    showConfirmButton: false,
 			                    title: '수정 실패',
+			                    icon: 'error'
+							});
+							setTimeout(() => {
+			        			window.location.replace('/board/'+board_id); 
+							}, 1000);
+						}
+					})
+			}
+			
+			function commentDelete(comment_id){
+				let board_id = document.getElementById('boardId').innerText;
+				
+				fetch('/comment/'+comment_id, {
+					method : 'DELETE',
+					headers : {
+						"Content-Type": "application/json",
+					},
+					body : JSON.stringify(comment_id),
+				})
+					.then(res => res.json())
+					.then(data => {
+						if(parseInt(data)>0){
+							Swal.fire({
+			                    showConfirmButton: false,
+			                    title: '삭제 완료',
+			                    icon: 'success'
+							});
+							setTimeout(() => {
+			        			window.location.replace('/board/'+board_id);
+							}, 1500);
+						} else {
+							Swal.fire({
+			                    showConfirmButton: false,
+			                    title: '삭제 실패',
 			                    icon: 'error'
 							});
 							setTimeout(() => {

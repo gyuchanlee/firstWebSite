@@ -17,5 +17,5 @@ public interface BoardListService {
 	public List<BoardCommentVO> commentList(String board_id); // 게시물의 댓글 가져오기
 	public int commentInsert(BoardCommentVO vo); // 댓글 등록
 	public int commentUpdate(BoardCommentVO vo); // 댓글 수정
-	public int commentDelete(String board_id); // 댓글 논리 삭제
+	public int commentDelete(String comment_id); // 댓글 논리 삭제
 }
