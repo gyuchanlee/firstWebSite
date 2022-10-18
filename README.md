@@ -92,6 +92,6 @@ __10일차 중간점검 - 앞으로의 요구 사항들__
 
 2022-10-17 : 댓글 기능 db, service controller 등록 완료. 수정-삭제 프론트 기능 
 
-2022-10-19 : 비밀번호 BcryptPasswordEncoder 적용, 댓글 crud 프론트부분 기능 구현
+2022-10-18 : 비밀번호 BcryptPasswordEncoder 적용, 댓글 crud 프론트부분 기능 구현
 
 > 다음 - 게시물 / 회원정보 profile 부분 img / file 업로드 
