@@ -63,20 +63,5 @@ public class LoginController {
 		view.addObject("message",loginFailMsg);
 		return view;
 	}
-	
 	//로그아웃 >> security에서 기존의 logout 기능을 제공. securityConfig에 기본적인 logout() 설정 사용.
-//	@PostMapping("/logout")
-//	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response,
-//			Authentication auth,HttpSession session) {
-//		auth = SecurityContextHolder.getContext().getAuthentication();
-//		if (auth != null) {
-//			session.removeAttribute("id");
-//			new SecurityContextLogoutHandler().logout(request, response, auth);
-//		}
-//		ModelAndView view = new ModelAndView("index");
-//		log.info("------------로그아웃===============");
-//		
-//		return view;
-//	}
-	
 }

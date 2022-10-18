@@ -69,8 +69,8 @@ public class SecurityConfig {
 		return new UserLoginFailHandler();
 	}
 	
-	// 비밀번호 암호화 BCrypt 사용
-//	@Bean
+	// 비밀번호 암호화 BCryptPasswordEncoder Bean 등록
+	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}

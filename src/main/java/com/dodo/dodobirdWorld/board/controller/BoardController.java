@@ -133,14 +133,16 @@ public class BoardController {
 	// 댓글 Update ajax
 	@PutMapping("/comment/{comment_id}")
 	public int commentUpdate(@RequestBody BoardCommentVO comment) {
-		int success = service.commentUpdate(comment);
+		int success = service.commentUpdate(comment); 
 		return success;
 	}
 	
 	// 댓글 delete ajax
 	@DeleteMapping("/comment/{comment_id}")
 	public int commentDelete(@RequestBody String comment_id) {
-		int success = service.commentDelete(comment_id); // 논리삭제로 변경
+		String comment_ids = comment_id.replaceAll("\"", ""); 
+		// @RequestBody에서 바로 String을 받아오는 경우, JSON에서 받아온 "String" 따옴표 형식까지 값으로 받아옴 > "" 제거.
+		int success = service.commentDelete(comment_ids); // 논리삭제로 변경
 		return success;
 	}
 	
