@@ -1,6 +1,7 @@
 package com.dodo.dodobirdWorld.users.service.Impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.dodo.dodobirdWorld.users.mapper.UsersMapper;
@@ -12,6 +13,8 @@ public class UsersServiceImpl implements UsersService {
 	
 	@Autowired
 	UsersMapper mapper;
+	@Autowired
+    private PasswordEncoder passwordEncoder;
 	
 	@Override
 	public UsersVO selectUserInfo(String id) {
@@ -21,6 +24,8 @@ public class UsersServiceImpl implements UsersService {
 
 	@Override
 	public int userInsert(UsersVO vo) {
+		String encodedPw = passwordEncoder.encode(vo.getPassword()); // 입력해서 받아온 유저 패스워드를 Bcrypt로 encode
+		vo.setPassword(encodedPw);
 		return mapper.userInsert(vo);
 	}
 
