@@ -95,3 +95,5 @@ __10일차 중간점검 - 앞으로의 요구 사항들__
 2022-10-18 : 비밀번호 BcryptPasswordEncoder 적용, 댓글 crud 프론트부분 기능 구현
 
 > 게시물 / 회원정보 profile 부분 img / file 업로드 기능 구현 필요
+
+2022-10-19 : 파일 업로드 기능 : 다중 업로드 / Apache Commons lib 선택
