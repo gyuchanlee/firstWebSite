@@ -29,7 +29,11 @@ public class SecurityConfig {
 				// 각각의 사용자의 권한으로 시장하는 매핑 각각의 사용자가 가진 권한에 맞춰서 적용
 				.antMatchers("/").permitAll()
 				.antMatchers("/board").permitAll()
+				.antMatchers("/photos").permitAll()
+				.antMatchers("/photos/**").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
+				.antMatchers("/photoWrite").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
 				.antMatchers("/board/**").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
+				.antMatchers("/boardWrite").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
 				.antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
 				.and()
 					.headers()

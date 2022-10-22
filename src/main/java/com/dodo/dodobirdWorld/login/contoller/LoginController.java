@@ -52,7 +52,7 @@ public class LoginController {
 		view.addObject("userno", session.getAttribute("userno"));
 		return view;
 	}
-	// 로그인 실패
+	// 로그인실패핸들러에서 리다이렉트되어 옴 / 로그인 실패 메시지 처리.
 	@PostMapping("/access_denied")
 	public ModelAndView access_denied (HttpServletRequest request, HttpServletResponse response,
 			HttpSession session, Authentication authentication) {

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dodo.dodobirdWorld.photos.mapper.PhotosMapper">
+	<select id="photosList" parameterType="Map" resultType="com.dodo.dodobirdWorld.photos.vo.PhotosVO">
+	      SELECT C.photo_ID, C.WRITER, C.TITLE , C.CONTENT, C.INSERT_DATE, C.UPDATE_DATE, C.DELETE_DATE, C.HIT, D.NICKNAME
+	      FROM photos C
+	      JOIN USERS D
+	      ON C.writer = D.user_no
+	      <where>
+			<if test="search =='글쓴이'">AND C.WRITER LIKE '%' ||#{keyword}|| '%'</if>
+			<if test="search =='제목'">AND C.TITLE LIKE '%' ||#{keyword}|| '%'</if>
+			<if test="search =='내용'">AND C.CONTENT LIKE '%' ||#{keyword}|| '%'</if>
+			<if test="'true' =='true'">AND C.delete_date is null</if>
+		  </where>
+		  ORDER BY INSERT_DATE DESC
+	</select>
+	
+	<select id="photosOne" parameterType="String" resultType="com.dodo.dodobirdWorld.photos.vo.PhotosVO">
+		SELECT * 
+		FROM photos
+		WHERE photo_ID = #{photo_id}
+	</select>
+	
+	<insert id="photosInsert" parameterType="com.dodo.dodobirdWorld.photos.vo.PhotosVO">
+		insert into photos values (
+			photos_ID_SEQ.nextval,
+			#{writer},
+			#{title},
+			#{content},
+			#{filename},
+			#{filename_original},
+			#{filesize},
+			sysdate,
+			sysdate,
+			null,
+			0
+		)
+	</insert>
+	
+	<update id="photosUpdate" parameterType="com.dodo.dodobirdWorld.photos.vo.PhotosVO">
+		update board set
+            writer = #{writer},
+            title = #{title},
+            content = #{content},
+            filename = #{filename},
+			filename_original = #{filename_original},
+			filesize = #{filesize},
+            update_date = sysdate
+            where photo_id = #{photo_id}
+	</update>
+	
+	<!-- 	조회수 +1 하여 저장 -->
+	<update id="hitUpdate" parameterType="String">
+		update board set
+			hit = hit + 1
+			where photo_id = #{photo_id}
+	</update>
+	
+	<!-- 논리 삭제 -->
+	<update id="photosDelete" parameterType="String">
+		update board set
+			delete_date =sysdate
+		where photo_id = #{photo_id}
+	</update>
+	
+</mapper>
