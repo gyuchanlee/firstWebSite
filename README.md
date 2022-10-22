@@ -97,3 +97,5 @@ __10일차 중간점검 - 앞으로의 요구 사항들__
 > 게시물 / 회원정보 profile 부분 img / file 업로드 기능 구현 필요
 
 2022-10-19 : 파일 업로드 기능 : 다중 업로드 / Apache Commons lib 선택
+
+2022-10-22 : 사진첩 게시판 추가 및 기본 모듈 세팅만 완료 > photosContoller에 사진 파일 업로드 기능 추가 필요 MultipartResolver 공부 필요!!
