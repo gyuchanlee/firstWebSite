@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html
+xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default_layout}">
+<head>
+<meta charset="UTF-8">
+<title>글 상세보기</title>
+</head>
+<body>
+	<div layout:fragment="content" class="content">
+	
+		<div class="card">
+		  <!-- 글 수정 -->
+		  <th:block th:if="${photo != null}">
+		  <div>
+		  	<h1>글 수정하기</h1>
+		  </div>
+		  <div class="card-header">
+		    <span>BID : </span>
+		    <span th:text="${photo.photo_id}">photoId</span>
+		    <span>글쓴이 : </span>
+		    <span th:text="${photo.writer}" class="card-title">writer</span>
+		  </div>
+		  <div class="card-body">
+		  	<h5>제목</h5>
+		    <textarea th:text="${photo.title}" id="title"></textarea>
+		    <hr>
+		    <h5>건전한 컨텐츠를 등록해주세요!!</h5>
+		    <textarea cols="50" rows="15" th:text="${photo.content}" id="content"></textarea>
+		  </div>
+		  <div class="card-footer row">
+		  	<div class="col">
+			    <p th:text="'등록일자 : '+${#dates.format(photo.insert_date, 'yyyy-MM-dd')}" class="card-text">insertDate</p>
+			    <span th:text="'수정일자 : '+${#dates.format(photo.update_date, 'yyyy-MM-dd')}" class="card-text">updateDate</span>
+		  	</div>
+		  	<div class="col" style="text-align:right; margin-top:14px;">
+			  	<a th:onclick="photoUpdate()" class="btn btn-primary">수정 완료</a>
+			  	<a th:href="@{/photos}" class="btn btn-primary">목록으로</a>
+		  	</div>
+		  </div>
+		  </th:block>
+		  
+		  <!-- 글 등록 -->
+		  <th:block th:unless="${photo != null}">
+		  <div>
+		  	<h1>글 등록하기</h1>
+		  </div>
+		  <div class="card-header">
+		    <span>글쓴이 : </span>
+		    <span th:text="|${nickname} (${id})|" class="card-title">writer</span>
+		    <input type="hidden" th:value="${id}" id="id" readonly>
+		    <input type="hidden" th:value="${userno}" id="userno" readonly>
+		  </div>
+		  <div class="card-body">
+		    <form id="photosInsert" action="/photos"
+	           	method="POST" class="form"
+	           	enctype="multipart/form-data">
+				<input type="hidden" name="writer" class="form-control" th:value="${userno}">
+	           	<div class="col-md-6 mb-3">
+	           		<label for="title">제목</label>
+					<input type="text" name="title" class="form-control">
+	           	</div>
+	           	<div class="col-md-6 mb-3">
+	           		<label for="content">내용</label>
+					<input type="text" name="content" class="form-control">
+	           	</div>
+	           	<div class="col-md-6 mb-3">
+	           		<label for="files">사진</label>
+					<input type="file" name="files" class="form-control">
+				</div>
+			
+			</form>
+		  </div>
+		  <div class="card-footer row">
+		  	<div class="col">
+		  	</div>
+		  	<div class="col" style="text-align:right; margin-top:2px;">
+		  		<button type="submit" form="photosInsert" class="btn btn-primary">등록 완료</button>
+			  	<a th:href="@{/photos}" class="btn btn-primary">목록으로</a>
+		  	</div>
+		  </div>
+		  </th:block>
+		</div>
+			
+		<script th:inline="javascript">
+		</script>	
+	</div>
+</body>
+</html>

@@ -28,7 +28,7 @@ public class UsersVO implements UserDetails {
 	private String phone;
 	private Date delete_date;
 	
-	// ajax에서 UsersVO를 json화 할때 생기는 문제 해결 > ddserializer 커스텀 class 추가.
+	// ajax에서 UsersVO를 json화 할때 생기는 문제 해결 > deserializer 커스텀 class 추가.
 	@JsonDeserialize(using = CustomAuthorityDeserializer.class)
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
