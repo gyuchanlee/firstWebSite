@@ -3,7 +3,7 @@
 xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/default_layout}">
+      layout:decorate="~{layout/default_layout}" lang="ko">
 <head>
 <meta charset="UTF-8">
 <title>글 상세보기</title>
@@ -25,10 +25,10 @@ xmlns="http://www.w3.org/1999/xhtml"
 		  </div>
 		  <div class="card-body">
 		  	<h5>제목</h5>
-		    <textarea th:text="${photo.title}" id="title"></textarea>
+		    <textarea th:text="${photo.title}" id="titleUpdate"></textarea>
 		    <hr>
 		    <h5>건전한 컨텐츠를 등록해주세요!!</h5>
-		    <textarea cols="50" rows="15" th:text="${photo.content}" id="content"></textarea>
+		    <textarea cols="50" rows="15" th:text="${photo.content}" id="contentUpdate"></textarea>
 		  </div>
 		  <div class="card-footer row">
 		  	<div class="col">
@@ -60,17 +60,16 @@ xmlns="http://www.w3.org/1999/xhtml"
 				<input type="hidden" name="writer" class="form-control" th:value="${userno}">
 	           	<div class="col-md-6 mb-3">
 	           		<label for="title">제목</label>
-					<input type="text" name="title" class="form-control">
+					<input type="text" id="title" name="title" class="form-control">
 	           	</div>
 	           	<div class="col-md-6 mb-3">
 	           		<label for="content">내용</label>
-					<input type="text" name="content" class="form-control">
+					<input type="text" name="content" id="content" class="form-control">
 	           	</div>
 	           	<div class="col-md-6 mb-3">
 	           		<label for="files">사진</label>
-					<input type="file" name="files" class="form-control">
+					<input type="file" id="files" name="uploadFile" class="form-control">
 				</div>
-			
 			</form>
 		  </div>
 		  <div class="card-footer row">

@@ -47,15 +47,17 @@ xmlns="http://www.w3.org/1999/xhtml"
 			<div th:each=" photos : ${list}" class="card" style="width: 400px; margin:2% 1% 2% 1%;">
 			  <div class="card-header">
 			    <span>BID : </span>
-			    <span th:text="${photos.photos_id}">photosId</span>
+			    <span th:text="${photos.photo_id}">photosId</span>
 			    <span>글쓴이 : </span>
-			    <span th:text="|${photos.nickname}|" class="card-title">writer</span>
+			    <span th:text="|${photos.writer}|" class="card-title">writer</span>
 			  </div>
+<!--				<img th:src="|C:uploadTest + ${photos.filename}|" class="card-img-top" th:alt="${photos.filename}">-->
 			  <div class="card-body">
 			    <h5 th:text="${photos.title}" class="card-title">title</h5>
+			    <p th:text="${photos.filename}" class="card-text">filename</p>
 			    <p th:text="${photos.content}" class="card-text overflow">content</p>
 			    <p th:text="${#dates.format(photos.insert_date, 'yyyy-MM-dd')}" class="card-text">insertDate</p>
-			    <a th:href="@{/photos/{photos_id}(photos_id = ${photos.photos_id})}" class="btn btn-primary">사진 상세보기</a>
+			    <a th:href="@{/photos/{photo_id}(photo_id = ${photos.photo_id})}" class="btn btn-primary">사진 상세보기</a>
 			  </div>
 			  <div class="card-footer text-muted">
 			  	<span>조회수 : </span>
