@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dodo.dodobirdWorld.photos.mapper.PhotosMapper">
 	<select id="photosList" parameterType="Map" resultType="com.dodo.dodobirdWorld.photos.vo.PhotosVO">
-	      SELECT C.photo_ID, C.WRITER, C.TITLE , C.CONTENT, C.INSERT_DATE, C.UPDATE_DATE, C.DELETE_DATE, C.HIT, D.NICKNAME
+	      SELECT C.photo_ID, C.WRITER, C.TITLE , C.CONTENT, C.FILENAME, C.FILENAME_ORIGINAL, C.INSERT_DATE, C.UPDATE_DATE, C.DELETE_DATE, C.HIT, D.NICKNAME
 	      FROM photos C
 	      JOIN USERS D
 	      ON C.writer = D.user_no

@@ -54,7 +54,7 @@ xmlns="http://www.w3.org/1999/xhtml"
 <!--				<img th:src="|C:uploadTest + ${photos.filename}|" class="card-img-top" th:alt="${photos.filename}">-->
 			  <div class="card-body">
 			    <h5 th:text="${photos.title}" class="card-title">title</h5>
-			    <p th:text="${photos.filename}" class="card-text">filename</p>
+<!--			    <img th:src="/uploadTest/4c7728d6-0402-4150-bf39-bfa4355f0a37_siba" class="card-text" th:if="${photos.filename != null}" >filename</img>-->
 			    <p th:text="${photos.content}" class="card-text overflow">content</p>
 			    <p th:text="${#dates.format(photos.insert_date, 'yyyy-MM-dd')}" class="card-text">insertDate</p>
 			    <a th:href="@{/photos/{photo_id}(photo_id = ${photos.photo_id})}" class="btn btn-primary">사진 상세보기</a>
